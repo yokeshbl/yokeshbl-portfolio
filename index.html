@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yokesh BL | Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom right, #121212, #1f1f1f);
+            color: #fff;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center the main content */
+        }
+
+        header {
+            background: #222;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+            width: 100%; /* Ensure full width */
+            max-width: 1200px; /* Limit header width */
+        }
+
+        header h1 {
+            font-size: 28px;
+            color: #f7c948;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #f0f0f0;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #f7c948;
+        }
+
+        section {
+            padding: 60px 40px;
+            scroll-margin-top: 80px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            border-bottom: 1px solid #333;
+            margin-bottom: 40px;
+            width: 100%; /* Ensure full width */
+            max-width: 900px; /* Limit section width for centering */
+            text-align: center; /* Center section content */
+        }
+        #contact {
+    background-color: #1f1f1f;
+    color: #fff;
+    padding: 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 8px;
+    text-align: center; /* Center the initial heading */
+}
+
+#contact h2 {
+    margin-bottom: 20px;
+}
+
+#contact p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+#contact ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the list items */
+    gap: 15px;
+}
+
+#contact li {
+    font-size: 1rem;
+}
+
+#contact li strong {
+    font-weight: bold;
+    color: #f7c948;
+    margin-right: 10px;
+}
+
+#contact li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+#contact li a:hover {
+    text-decoration: underline;
+    color: #f7c948;
+}
+
+        section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        section.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero {
+            padding-top: 120px;
+            background: radial-gradient(circle, #1e1e1e, #121212);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, #f7c948, transparent);
+            animation: slideBar 2s infinite;
+        }
+
+        @keyframes slideBar {
+            0% {
+                left: -100%;
+            }
+
+            50% {
+                left: 50%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .hero h2 {
+            font-size: 52px;
+            color: #f7c948;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.8s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 20px auto;
+            color: #ddd;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #about .about-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            max-width: 700px; /* Limit width for better readability */
+            margin: 0 auto; /* Center the content */
+        }
+
+        #about.reveal .about-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-paragraph {
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .projects ul,
+        .certifications ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .projects li,
+        .certifications li {
+            margin: 15px 0;
+            padding-left: 15px;
+            border-left: 4px solid #f7c948;
+            transition: transform 0.3s ease;
+            text-align: left; /* Align list items to the left */
+            max-width: 600px; /* Limit width for better readability */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .projects li:hover,
+        .certifications li:hover {
+            transform: translateX(5px);
+        }
+
+        a.project-link,
+        a.cert-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a.project-link:hover,
+        a.cert-link:hover {
+            color: #f7c948;
+        }
+
+        .source-button {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 0.3rem 0.6rem;
+            background: #f7c948;
+            color: #111;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .source-button:hover {
+            background: #ffda6a;
+            transform: scale(1.05);
+        }
+
+        #contact {
+            background-color: #1f1f1f;
+            color: #fff;
+            padding: 3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            border-radius: 8px;
+        }
+
+        #contact h2 {
+            margin-bottom: 20px;
+        }
+
+        #contact p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        #contact ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #contact li {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        #contact li strong {
+            font-weight: bold;
+            color: #f7c948;
+            margin-right: 10px;
+        }
+
+        #contact li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+        }
+
+        #contact li a:hover {
+            text-decoration: underline;
+            color: #f7c948;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #111;
+            color: #888;
+            font-size: 0.9rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            max-width: 600px; /* Limit width for centering */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .skill-item {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .experience-list {
+            margin-top: 20px;
+            max-width: 700px; /* Limit width for centering */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .experience-item {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            text-align: left; /* Align experience text to the left */
+        }
+
+        .experience-item h3 {
+            color: #f7c948;
+            margin-bottom: 5px;
+        }
+
+        .experience-item p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Yokesh BL</h1>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero reveal">
+    <h2>Hello, I'm Yokesh 👋</h2>
+    <p>Aspiring Software Developer focused on backend systems and full-stack applications using Java, Spring
+        Boot, and Angular. Driven to build robust, scalable applications with clean, efficient code.</p>
+</section>
+
+<section id="about" class="reveal">
+    <h2>About Me</h2>
+    <style>
+        #about .about-paragraph {
+            text-align: justify;
+        }
+    </style>
+    <div class="about-content">
+        <p class="about-paragraph">
+            A Software Developer with practical experience in Java, Spring Boot, Hibernate, and RESTful APIs, I am adept at building web applications and optimizing backend systems. During my internship at Systemic Altruism, I contributed to optimizing backend APIs, improving page load speed and enhancing user experience. Holding a Bachelor of Commerce degree in Information Systems Management, I am passionate about creating efficient and scalable software solutions and eager to contribute my skills to challenging projects.
+        </p>
+    </div>
+</section>
+
+<section id="experience" class="reveal">
+    <h2>Experience</h2>
+    <div class="experience-list">
+        <div class="experience-item">
+            <h3>Backend Developer Intern</h3>
+            <p><strong>Systemic Altruism (December 2024 - March 2025)</strong></p>
+            <ul>
+                <li>Developed and optimized backend APIs using Java Spring Boot, improving page load speed
+                    by 30%.</li>
+                <li>Designed and implemented database solutions using MySQL and Hibernate, increasing data
+                    retrieval efficiency by 20%.</li>
+                <li>Improved server-side logic and REST API integrations, reducing processing errors by 15%
+                    and strengthening overall system stability.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="skills" class="reveal">
+    <h2>Skills</h2>
+    <div class="skills-container">
+        <div class="skill-item">Java</div>
+        <div class="skill-item">Python</div>
+        <div class="skill-item">C</div>
+        <div class="skill-item">C++</div>
+        <div class="skill-item">Spring Boot</div>
+        <div class="skill-item">Spring MVC</div>
+        <div class="skill-item">Hibernate</div>
+        <div class="skill-item">RESTful APIs</div>
+        <div class="skill-item">HTML</div>
+        <div class="skill-item">CSS</div>
+        <div class="skill-item">TypeScript</div>
+        <div class="skill-item">Angular</div>
+        <div class="skill-item">MySQL</div>
+        <div class="skill-item">GitHub</div>
+        <div class="skill-item">Postman</div>
+    </div>
+</section>
+
+<section id="projects" class="projects reveal">
+    <h2>Projects</h2>
+    <ul>
+        <li class="project-card">
+            <a class="project-link" href="https://github.com/yokeshbl/jobportal-final-year-project" target="_blank">
+                Hire Hub Recruitment Web App
+            </a>
+            <p>
+                A scalable job portal that streamlines the hiring process with user login, job postings and resume uploads — designed with security and performance in mind.
+            </p>
+            <ul class="tech-stack">
+                <li><strong>Frontend:</strong> Thymeleaf, HTML, CSS</li>
+                <li><strong>Backend:</strong> Java, Spring Boot, Spring MVC</li>
+                <li><strong>Database:</strong> MySQL</li>
+                <li><strong>Tools:</strong> GitHub, Postman</li>
+            </ul>
+            <a class="source-button" href="https://github.com/yokeshbl/jobportal-final-year-project" target="_blank">
+                Explore Code
+            </a>
+        </li>
+
+        <li class="project-card">
+            <a class="project-link" href="https://github.com/yokeshbl/ecommerce-project" target="_blank">
+                E-Commerce Website
+            </a>
+            <p>
+                A dynamic e-commerce platform with a seamless shopping experience, featuring product listings, cart, checkout, and an admin panel to manage inventory and orders.
+            </p>
+            <ul class="tech-stack">
+                <li><strong>Frontend:</strong> Angular, TypeScript, HTML, CSS</li>
+                <li><strong>Backend:</strong> Java, Spring Boot</li>
+                <li><strong>Database:</strong> MySQL</li>
+                <li><strong>Tools:</strong> GitHub, Postman</li>
+            </ul>
+            <a class="source-button" href="https://github.com/yokeshbl/ecommerce-project" target="_blank">
+                Explore Code
+            </a>
+        </li>
+
+        <li class="project-card">
+            <a class="project-link" href="https://github.com/yokeshbl/Employee_Management_directory_Project" target="_blank">
+                Employee Management System
+            </a>
+            <p>
+                A CRUD-based web app for managing employee records and roles, built with performance-focused backend architecture and robust database integration.
+            </p>
+            <ul class="tech-stack">
+                <li><strong>Frontend:</strong> HTML, CSS,Thymeleaf</li>
+                <li><strong>Backend:</strong> Java, Spring Boot</li>
+                <li><strong>Database:</strong> MySQL</li>
+                <li><strong>Tools:</strong> GitHub, Postman</li>
+            </ul>
+            <a class="source-button" href="https://github.com/yokeshbl/Employee_Management_directory_Project" target="_blank">
+                Explore Code
+            </a>
+        </li>
+    </ul>
+</section>
+
+
+
+<section id="certifications" class="certifications reveal">
+    <h2>Certifications</h2>
+    <ul>
+        <li>
+            <a class="cert-link" href="https://www.udemy.com/certificate/UC-3b524a37-578a-4eee-9843-d517661a9fc9/"
+               target="_blank">Spring Boot 3, Spring 6 & Hibernate for Beginners – Udemy</a>
+        </li>
+        <li>
+            <a class="cert-link" href="https://www.udemy.com/certificate/UC-e8910b30-86f7-495a-bf1f-887ec1622563/"
+               target="_blank">Angular and Java Spring Boot Ecommerce Website – Udemy</a>
+        </li>
+        <li>
+            <a class="cert-link" href="https://www.credly.com/badges/b882fd06-9fd8-46d7-89da-95d579d670ec"
+               target="_blank">Artificial Intelligence Fundamentals – IBM</a>
+        </li>
+        <li>
+            <a class="cert-link" href="https://www.credly.com/badges/023c85d1-1bcb-4338-adc5-07e282f76fe6"
+               target="_blank">Communication and Personality Dynamics – IBM</a>
+        </li>
+        <li>
+            <a class="cert-link" href="https://www.credly.com/badges/1ed38949-754b-49c4-adf2-bcd6a0f80f1b"
+               target="_blank">Problem Solving and Process Controls – IBM</a>
+        </li>
+    </ul>
+</section>
+
+<section id="contact" class="reveal">
+    <h2>Contact</h2>
+    <p>Feel free to reach out!</p>
+    <ul>
+        <li>
+            <strong>Email:</strong> <a href="mailto:yokesh19072005@gmail.com">yokesh19072005@gmail.com</a>
+        </li>
+        <li>
+            <strong>LinkedIn:</strong> <a href=" https://www.linkedin.com/in/yokeshbl">yokeshbl</a>
+        </li>
+        <li>
+            <strong> Mobile No:</strong> 6383464027
+        </li>
+    </ul>
+</section>
+</body>
+</html>
