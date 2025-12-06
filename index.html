@@ -4,595 +4,711 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio of Yokesh BL - Java Backend Developer">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <title>Yokesh BL | Portfolio</title>
+    <title>Yokesh BL | Backend Developer</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        :root {
+            /* Modern Indigo/Cyan Theme - Professional yet Techy */
+            --primary: #6366f1; /* Indigo */
+            --secondary: #06b6d4; /* Cyan */
+            --accent: #f43f5e; /* Rose (for highlights) */
+            
+            --bg-dark: #0f172a; /* Slate 900 */
+            --bg-darker: #020617; /* Slate 950 */
+            
+            --card-bg: rgba(30, 41, 59, 0.7); /* Glassy Slate */
+            --border: rgba(148, 163, 184, 0.1);
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            
+            --font-head: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to bottom right, #121212, #1f1f1f);
-            color: #fff;
-            line-height: 1.6;
-            scroll-behavior: smooth;
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Center the main content */
+            font-family: var(--font-body);
+            background-color: var(--bg-darker);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 40%);
         }
 
+        /* --- Global Utilities --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-padding {
+            padding: 120px 0; /* Huge padding for "big sections" feel */
+        }
+
+        /* --- Header --- */
         header {
-            background: #222;
-            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        header .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-            width: 100%; /* Ensure full width */
-            max-width: 1200px; /* Limit header width */
         }
 
-        header h1 {
-            font-size: 28px;
-            color: #f7c948;
+        .logo {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
         nav a {
-            margin: 0 15px;
+            margin-left: 35px;
             text-decoration: none;
-            color: #f0f0f0;
+            color: var(--text-muted);
             font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        nav a:hover {
-            color: #f7c948;
-        }
-
-        section {
-            padding: 60px 40px;
-            scroll-margin-top: 80px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-            border-bottom: 1px solid #333;
-            margin-bottom: 40px;
-            width: 100%; /* Ensure full width */
-            max-width: 900px; /* Limit section width for centering */
-            text-align: center; /* Center section content */
-        }
-        #contact {
-    background-color: #1f1f1f;
-    color: #fff;
-    padding: 3rem;
-    max-width: 900px;
-    margin: 0 auto;
-    border-radius: 8px;
-    text-align: center; /* Center the initial heading */
-}
-
-#contact h2 {
-    margin-bottom: 20px;
-}
-
-#contact p {
-    margin-bottom: 20px;
-    font-size: 1.1rem;
-}
-
-#contact ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center the list items */
-    gap: 15px;
-}
-
-#contact li {
-    font-size: 1rem;
-}
-
-#contact li strong {
-    font-weight: bold;
-    color: #f7c948;
-    margin-right: 10px;
-}
-
-#contact li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s ease, text-decoration 0.3s ease;
-}
-
-#contact li a:hover {
-    text-decoration: underline;
-    color: #f7c948;
-}
-
-        section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        section.reveal {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .hero {
-            padding-top: 120px;
-            background: radial-gradient(circle, #1e1e1e, #121212);
+            font-size: 0.95rem;
+            transition: 0.3s;
             position: relative;
-            overflow: hidden;
         }
 
-        .hero::after {
+        nav a:hover, nav a.active {
+            color: var(--text-main);
+        }
+
+        nav a::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(to right, #f7c948, transparent);
-            animation: slideBar 2s infinite;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
         }
 
-        @keyframes slideBar {
-            0% {
-                left: -100%;
-            }
+        nav a:hover::after { width: 100%; }
 
-            50% {
-                left: 50%;
-            }
-
-            100% {
-                left: 100%;
-            }
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px;
         }
 
-        .hero h2 {
-            font-size: 52px;
-            color: #f7c948;
-            margin-bottom: 20px;
-            animation: fadeInDown 0.8s ease-in-out;
+        .hero-content h1 {
+            font-family: var(--font-head);
+            font-size: 4.5rem; /* Massive Headline */
+            line-height: 1.1;
+            margin-bottom: 25px;
+            font-weight: 800;
         }
 
-        .hero p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 20px auto;
-            color: #ddd;
-            animation: fadeInUp 1s ease-in-out;
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.6;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-40px);
-            }
+        .btn-group { display: flex; gap: 20px; }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        #about .about-content {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-            max-width: 700px; /* Limit width for better readability */
-            margin: 0 auto; /* Center the content */
-        }
-
-        #about.reveal .about-content {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .about-paragraph {
-            line-height: 1.7;
-            margin-bottom: 15px;
-        }
-
-        .projects ul,
-        .certifications ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .projects li,
-        .certifications li {
-            margin: 15px 0;
-            padding-left: 15px;
-            border-left: 4px solid #f7c948;
-            transition: transform 0.3s ease;
-            text-align: left; /* Align list items to the left */
-            max-width: 600px; /* Limit width for better readability */
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .projects li:hover,
-        .certifications li:hover {
-            transform: translateX(5px);
-        }
-
-        a.project-link,
-        a.cert-link {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-
-        a.project-link:hover,
-        a.cert-link:hover {
-            color: #f7c948;
-        }
-
-        .source-button {
-            display: inline-block;
-            margin-left: 10px;
-            padding: 0.3rem 0.6rem;
-            background: #f7c948;
-            color: #111;
-            font-size: 0.9rem;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .source-button:hover {
-            background: #ffda6a;
-            transform: scale(1.05);
-        }
-
-        #contact {
-            background-color: #1f1f1f;
-            color: #fff;
-            padding: 3rem;
-            max-width: 700px;
-            margin: 0 auto;
+        .btn {
+            padding: 14px 32px;
             border-radius: 8px;
-        }
-
-        #contact h2 {
-            margin-bottom: 20px;
-        }
-
-        #contact p {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-
-        #contact ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        #contact li {
-            margin-bottom: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
             font-size: 1rem;
         }
 
-        #contact li strong {
-            font-weight: bold;
-            color: #f7c948;
-            margin-right: 10px;
-        }
-
-        #contact li a {
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: #fff;
-            text-decoration: none;
-            transition: color 0.3s ease, text-decoration 0.3s ease;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
         }
 
-        #contact li a:hover {
-            text-decoration: underline;
-            color: #f7c948;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
         }
 
-        footer {
-            text-align: center;
-            padding: 30px;
-            background: #111;
-            color: #888;
-            font-size: 0.9rem;
-            width: 100%;
-            max-width: 1200px;
+        .btn-outline {
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.03);
         }
 
-        .skills-container {
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* --- About Section (Split Layout) --- */
+        .about-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-            max-width: 600px; /* Limit width for centering */
-            margin-left: auto;
-            margin-right: auto;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
         }
 
-        .skill-item {
-            background-color: #333;
-            color: #fff;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
-            font-weight: bold;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        .about-text h2 {
+            font-family: var(--font-head);
+            font-size: 3rem;
+            margin-bottom: 30px;
         }
 
-        .skill-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 20px;
         }
 
-        .experience-list {
-            margin-top: 20px;
-            max-width: 700px; /* Limit width for centering */
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .experience-item {
-            background-color: #2a2a2a;
+        .highlight-box {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
             padding: 20px;
-            border-radius: 6px;
+            border-radius: 0 8px 8px 0;
+            margin: 30px 0;
+        }
+
+        /* 3D Visual for About */
+        .code-window {
+            background: #1e1e2e;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .code-window:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+        }
+
+        .window-header {
+            background: #282a36;
+            padding: 12px 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5555; } .yellow { background: #f1fa8c; } .green { background: #50fa7b; }
+
+        .window-body {
+            padding: 25px;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #f8f8f2;
+        }
+
+        .kwd { color: #ff79c6; } .str { color: #f1fa8c; } .cls { color: #8be9fd; } .cmt { color: #6272a4; }
+
+        /* --- Experience (Timeline) --- */
+        .section-header {
+            margin-bottom: 60px;
+            max-width: 700px;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-head);
+            font-size: 3rem;
             margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-            text-align: left; /* Align experience text to the left */
         }
 
-        .experience-item h3 {
-            color: #f7c948;
-            margin-bottom: 5px;
+        .timeline-container {
+            position: relative;
+            border-left: 2px solid rgba(148, 163, 184, 0.2);
+            margin-left: 20px;
+            padding-left: 40px;
         }
 
-        .experience-item p {
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -49px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.2);
+        }
+
+        .timeline-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 35px;
+            border-radius: 16px;
+            transition: 0.3s;
+        }
+
+        .timeline-card:hover {
+            border-color: var(--primary);
+            transform: translateX(10px);
+        }
+
+        .timeline-role { font-size: 1.5rem; font-weight: 700; color: var(--text-main); margin-bottom: 5px; }
+        .timeline-company { font-size: 1.1rem; color: var(--secondary); margin-bottom: 20px; display: block; font-family: var(--font-code);}
+        
+        .timeline-card ul {
+            list-style: none;
+        }
+
+        .timeline-card li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .timeline-card li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* --- Skills (Categorized) --- */
+        .skills-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .skill-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            border-radius: 50px;
             font-size: 0.95rem;
-            line-height: 1.5;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .skill-pill:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--primary);
+            color: var(--text-main);
+            transform: translateY(-3px);
+        }
+
+        .skill-pill i { font-size: 1.1rem; color: var(--secondary); }
+
+        /* --- Projects (Cards) --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px -15px rgba(6, 182, 212, 0.2);
+        }
+
+        .card-body {
+            padding: 35px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-family: var(--font-head);
+            color: var(--text-main);
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1rem;
+            flex-grow: 1;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tech-tag {
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            color: var(--secondary);
+            background: rgba(6, 182, 212, 0.1);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .card-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-links a:hover { color: var(--primary); }
+
+        /* --- Contact --- */
+        .contact-section {
+            text-align: center;
+            background: linear-gradient(to top, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0));
+        }
+
+        .contact-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            display: inline-flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 50px;
+            border-radius: 20px;
+            min-width: 300px;
+        }
+
+        .contact-link {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .contact-link:hover { color: var(--primary); }
+
+        /* --- Mobile --- */
+        @media (max-width: 900px) {
+            .hero-content h1 { font-size: 3rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .code-window { display: none; /* Hide 3D element on mobile to save space */ }
+            .timeline-container { margin-left: 0; padding-left: 20px; }
+            .timeline-dot { left: -29px; }
+            .timeline-card { padding: 25px; }
         }
     </style>
 </head>
 
 <body>
+
 <header>
-    <h1>Yokesh BL</h1>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#experience">Experience</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#certifications">Certifications</a>
-        <a href="#contact">Contact</a>
-    </nav>
+    <div class="container">
+        <div class="logo">Yokesh <span class="gradient-text">BL</span></div>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Work</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </div>
 </header>
 
-<section class="hero reveal">
-    <h2>Hello, I'm Yokesh 👋</h2>
-    <p>Architecting the Future of Web: Building Robust Backend Solutions with Java and Spring Boot.</p>
+<section class="hero">
+    <div class="container hero-content">
+        <p class="gradient-text" style="font-weight: 600; margin-bottom: 10px;">👋 Hello, I am</p>
+        <h1>Yokesh BL</h1>
+        <h2 style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 20px;">
+            Java Backend Developer
+        </h2>
+        <p>
+            I build robust, scalable backend systems using Java and Spring Boot. 
+            Passionate about clean architecture, API optimization, and delivering 
+            high-performance software solutions for modern businesses.
+        </p>
+        <div class="btn-group">
+            <a href="#projects" class="btn btn-primary">View My Work</a>
+            <a href="#contact" class="btn btn-outline">Contact Me</a>
+        </div>
+    </div>
 </section>
 
-<section id="about" class="reveal">
-    <h2>About Me</h2>
-    <style>
-        #about .about-paragraph {
-            text-align: justify;
-        }
-    </style>
-    <div class="about-content">
-        <p class="about-paragraph">
-            I'm a Software Developer who thrives on architecting and optimizing backend systems. Leveraging my expertise in Java, Spring Boot, Hibernate, and RESTful APIs, I build high-performance web applications from the ground up. At Systemic Altruism, I was instrumental in a key project, where my work on backend API optimization significantly boosted page load speed and overall user satisfaction. With a solid foundation in Information Systems Management, I am a firm believer in the power of clean code and efficient design to create scalable and innovative software solutions.
+<section id="about" class="section-padding">
+    <div class="container">
+        <div class="about-grid">
+            
+            <div class="code-window">
+                <div class="window-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="window-body">
+                    <span class="kwd">class</span> <span class="cls">Developer</span> {<br>
+                    &nbsp;&nbsp;<span class="kwd">String</span> name = <span class="str">"Yokesh BL"</span>;<br>
+                    &nbsp;&nbsp;<span class="kwd">String</span> role = <span class="str">"Backend Engineer"</span>;<br><br>
+                    &nbsp;&nbsp;<span class="kwd">void</span> <span class="cls">coreCompetencies</span>() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;optimizeAPIs();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;databaseDesign();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;cleanCode();<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </div>
+
+            <div class="about-text">
+                <h2 class="gradient-text">About Me</h2>
+                <p>
+                    I am a results-driven <strong>Software Developer</strong> with a strong foundation in Information Systems Management. My expertise lies in architecting backend solutions that are not just functional, but efficient and scalable.
+                </p>
+                <p>
+                    With hands-on experience in <strong>Java, Spring Boot, and Hibernate</strong>, I have successfully optimized system performance and reduced latency in real-world projects. I thrive in collaborative environments where I can translate complex business requirements into reliable technical solutions.
+                </p>
+                
+                <div class="highlight-box">
+                    <strong style="color: #fff;">Why Hire Me?</strong><br>
+                    <span style="font-size: 0.95rem; color: var(--text-muted);">
+                        I combine technical proficiency with a problem-solving mindset. I don't just write code; I engineer solutions that improve user experience and system stability.
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="experience" class="section-padding">
+    <div class="container">
+        <div class="section-header">
+            <h2>Professional Experience</h2>
+            <p style="color: var(--text-muted);">My journey in the tech industry.</p>
+        </div>
+
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <h3 class="timeline-role">Backend Developer Intern</h3>
+                    <span class="timeline-company">Systemic Altruism | Dec 2024 - Mar 2025</span>
+                    <ul>
+                        <li><strong>Performance Optimization:</strong> Engineered and optimized RESTful APIs using Java Spring Boot, resulting in a <strong>30% improvement</strong> in page load speeds.</li>
+                        <li><strong>Database Architecture:</strong> Redesigned database schemas using MySQL and Hibernate to eliminate redundancy, increasing data retrieval efficiency by <strong>20%</strong>.</li>
+                        <li><strong>System Stability:</strong> Refactored legacy server-side logic to handle edge cases, reducing API processing errors by <strong>15%</strong>.</li>
+                        <li><strong>Collaboration:</strong> Collaborated with frontend teams to ensure seamless API integration and consistent data flow.</li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+    </div>
+</section>
+
+<section id="skills" class="section-padding" style="background: rgba(255,255,255,0.02);">
+    <div class="container">
+        <div class="section-header">
+            <h2>Technical Skills</h2>
+            <p style="color: var(--text-muted);">My technical toolkit.</p>
+        </div>
+
+        <div class="skills-wrapper">
+            <div class="skill-category">
+                <h3>Backend & Database</h3>
+                <div class="skill-list">
+                    <div class="skill-pill"><i class="fab fa-java"></i> Java</div>
+                    <div class="skill-pill"><i class="fas fa-leaf"></i> Spring Boot</div>
+                    <div class="skill-pill"><i class="fas fa-server"></i> Spring MVC</div>
+                    <div class="skill-pill"><i class="fas fa-database"></i> Hibernate</div>
+                    <div class="skill-pill"><i class="fas fa-database"></i> MySQL</div>
+                    <div class="skill-pill"><i class="fab fa-php"></i> PHP</div>
+                    <div class="skill-pill"><i class="fab fa-laravel"></i> Laravel</div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>Frontend</h3>
+                <div class="skill-list">
+                    <div class="skill-pill"><i class="fab fa-angular"></i> Angular</div>
+                    <div class="skill-pill"><i class="fab fa-js"></i> TypeScript</div>
+                    <div class="skill-pill"><i class="fab fa-html5"></i> HTML5</div>
+                    <div class="skill-pill"><i class="fab fa-css3-alt"></i> CSS3</div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>Tools & Others</h3>
+                <div class="skill-list">
+                    <div class="skill-pill"><i class="fab fa-github"></i> GitHub</div>
+                    <div class="skill-pill"><i class="fas fa-rocket"></i> Postman</div>
+                    <div class="skill-pill"><i class="fas fa-code-branch"></i> Git</div>
+                    <div class="skill-pill"><i class="fas fa-terminal"></i> VS Code</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects" class="section-padding">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Projects</h2>
+            <p style="color: var(--text-muted);">Real-world applications I have built.</p>
+        </div>
+
+        <div class="projects-grid">
+            
+            <div class="project-card">
+                <div class="card-body">
+                    <h3 class="project-title">Hire Hub Portal</h3>
+                    <p class="project-desc">
+                        A comprehensive recruitment platform designed to handle high-volume job applications. Features include secure role-based authentication (Admin/User), Resume parsing, and real-time job status updates.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">Spring Boot</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">Thymeleaf</span>
+                    </div>
+                    <div class="card-links">
+                        <a href="https://github.com/yokeshbl/jobportal-final-year-project" target="_blank"><i class="fab fa-github"></i> View Source Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-body">
+                    <h3 class="project-title">E-Commerce System</h3>
+                    <p class="project-desc">
+                        A full-stack shopping solution built with a microservices mindset. Implemented a shopping cart session, secure checkout flow, and an admin dashboard for inventory management.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Angular</span>
+                        <span class="tech-tag">Java Spring</span>
+                        <span class="tech-tag">REST API</span>
+                    </div>
+                    <div class="card-links">
+                        <a href="https://github.com/yokeshbl/ecommerce-project" target="_blank"><i class="fab fa-github"></i> View Source Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-body">
+                    <h3 class="project-title">Employee Directory</h3>
+                    <p class="project-desc">
+                        A corporate directory application focusing on CRUD operations and data integrity. Implemented strict server-side validation to prevent data corruption and ensured a responsive UI.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">Spring Boot</span>
+                        <span class="tech-tag">HTML/CSS</span>
+                    </div>
+                    <div class="card-links">
+                        <a href="https://github.com/yokeshbl/Employee_Management_directory_Project" target="_blank"><i class="fab fa-github"></i> View Source Code</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="section-padding contact-section">
+    <div class="container">
+        <h2>Ready to Hire?</h2>
+        <p style="margin-bottom: 40px; color: var(--text-muted);">
+            I am currently available for immediate joining. Let's discuss how I can contribute to your team.
+        </p>
+        
+        <div class="contact-box">
+            <a href="mailto:yokesh19072005@gmail.com" class="contact-link">
+                <i class="fas fa-envelope"></i> yokesh19072005@gmail.com
+            </a>
+            <a href="https://www.linkedin.com/in/yokeshbl" class="contact-link">
+                <i class="fab fa-linkedin"></i> linkedin.com/in/yokeshbl
+            </a>
+            <a href="tel:+916383464027" class="contact-link">
+                <i class="fas fa-phone"></i> +91-6383464027
+            </a>
+        </div>
+        
+        <p style="margin-top: 60px; font-size: 0.9rem; opacity: 0.4;">
+            &copy; 2025 Yokesh BL. All rights reserved.
         </p>
     </div>
 </section>
 
-<section id="experience" class="reveal">
-    <h2>Experience</h2>
-    <div class="experience-list">
-        <div class="experience-item">
-            <h3>Backend Developer Intern</h3>
-            <p><strong>Systemic Altruism (December 2024 - March 2025)</strong></p>
-            <ul>
-                <li>Developed and optimized backend APIs using Java Spring Boot, improving page load speed
-                    by 30%.</li>
-                <li>Designed and implemented database solutions using MySQL and Hibernate, increasing data
-                    retrieval efficiency by 20%.</li>
-                <li>Improved server-side logic and REST API integrations, reducing processing errors by 15%
-                    and strengthening overall system stability.</li>
-            </ul>
-        </div>
-    </div>
-<section id="skills" class="reveal">
-    <h2>Skills</h2>
-    <div class="skills-container">
-        <div class="skill-item">
-            <i class="fab fa-java"></i>
-            <span>Java</span>
-        </div>
-        <div class="skill-item">
-            <span>C</span>
-        </div>
-        <div class="skill-item">
-            <span>C++</span>
-        </div>
-        <div class="skill-item">
-            <i class="fas fa-leaf"></i>
-            <span>Spring Boot</span>
-        </div>
-        <div class="skill-item">
-            <i class="fas fa-leaf"></i>
-            <span>Spring MVC</span>
-        </div>
-        <div class="skill-item">
-            <i class="fas fa-database"></i>
-            <span>Hibernate</span>
-        </div>
-        <div class="skill-item">
-            <i class="fas fa-exchange-alt"></i>
-            <span>RESTful APIs</span>
-        </div>
-        <div class="skill-item">
-            <i class="fas fa-database"></i>
-            <span>MySQL</span>
-        </div>
-        <div class="skill-item">
-            <i class="fas fa-paper-plane"></i>
-            <span>Postman</span>
-        </div>
-        <div class="skill-item">
-            <i class="fab fa-github"></i>
-            <span>GitHub</span>
-        </div>
-
-        <div class="skill-item">
-            <i class="fab fa-angular"></i>
-            <span>Angular</span>
-        </div>
-        <div class="skill-item">
-            <i class="fab fa-html5"></i>
-            <span>HTML</span>
-        </div>
-        <div class="skill-item">
-            <i class="fab fa-css3-alt"></i>
-            <span>CSS</span>
-        </div>
-        <div class="skill-item">
-            <i class="fab fa-angular"></i>
-            <span>TypeScript</span>
-        </div>
-<div class="skill-item">
-            <i class="fab fa-python"></i>
-            <span>Python</span>
-        </div>
-    </div>
-</section>
-<section id="projects" class="projects reveal">
-    <h2>Projects</h2>
-    <ul>
-        <li class="project-card">
-            <a class="project-link" href="https://github.com/yokeshbl/jobportal-final-year-project" target="_blank">
-                Hire Hub Recruitment Web App
-            </a>
-            <p>
-                A scalable job portal that streamlines the hiring process with user login, job postings and resume uploads — designed with security and performance in mind.
-            </p>
-            <ul class="tech-stack">
-                <li><strong>Frontend:</strong> Thymeleaf, HTML, CSS</li>
-                <li><strong>Backend:</strong> Java, Spring Boot, Spring MVC</li>
-                <li><strong>Database:</strong> MySQL</li>
-                <li><strong>Tools:</strong> GitHub, Postman</li>
-            </ul>
-            <a class="source-button" href="https://github.com/yokeshbl/jobportal-final-year-project" target="_blank">
-                Explore Code
-            </a>
-        </li>
-
-        <li class="project-card">
-            <a class="project-link" href="https://github.com/yokeshbl/ecommerce-project" target="_blank">
-                E-Commerce Website
-            </a>
-            <p>
-                A dynamic e-commerce platform with a seamless shopping experience, featuring product listings, cart, checkout, and an admin panel to manage inventory and orders.
-            </p>
-            <ul class="tech-stack">
-                <li><strong>Frontend:</strong> Angular, TypeScript, HTML, CSS</li>
-                <li><strong>Backend:</strong> Java, Spring Boot</li>
-                <li><strong>Database:</strong> MySQL</li>
-                <li><strong>Tools:</strong> GitHub, Postman</li>
-            </ul>
-            <a class="source-button" href="https://github.com/yokeshbl/ecommerce-project" target="_blank">
-                Explore Code
-            </a>
-        </li>
-
-        <li class="project-card">
-            <a class="project-link" href="https://github.com/yokeshbl/Employee_Management_directory_Project" target="_blank">
-                Employee Management System
-            </a>
-            <p>
-                A CRUD-based web app for managing employee records and roles, built with performance-focused backend architecture and robust database integration.
-            </p>
-            <ul class="tech-stack">
-                <li><strong>Frontend:</strong> HTML, CSS,Thymeleaf</li>
-                <li><strong>Backend:</strong> Java, Spring Boot</li>
-                <li><strong>Database:</strong> MySQL</li>
-                <li><strong>Tools:</strong> GitHub, Postman</li>
-            </ul>
-            <a class="source-button" href="https://github.com/yokeshbl/Employee_Management_directory_Project" target="_blank">
-                Explore Code
-            </a>
-        </li>
-    </ul>
-</section>
-
-
-
-<section id="certifications" class="certifications reveal">
-    <h2>Certifications</h2>
-    <ul>
-        <li>
-            <a class="cert-link" href="https://www.udemy.com/certificate/UC-3b524a37-578a-4eee-9843-d517661a9fc9/"
-               target="_blank">Spring Boot 3, Spring 6 & Hibernate for Beginners – Udemy</a>
-        </li>
-        <li>
-            <a class="cert-link" href="https://www.udemy.com/certificate/UC-e8910b30-86f7-495a-bf1f-887ec1622563/"
-               target="_blank">Angular and Java Spring Boot Ecommerce Website – Udemy</a>
-        </li>
-        <li>
-            <a class="cert-link" href="https://www.credly.com/badges/b882fd06-9fd8-46d7-89da-95d579d670ec"
-               target="_blank">Artificial Intelligence Fundamentals – IBM</a>
-        </li>
-        <li>
-            <a class="cert-link" href="https://www.credly.com/badges/023c85d1-1bcb-4338-adc5-07e282f76fe6"
-               target="_blank">Communication and Personality Dynamics – IBM</a>
-        </li>
-        <li>
-            <a class="cert-link" href="https://www.credly.com/badges/1ed38949-754b-49c4-adf2-bcd6a0f80f1b"
-               target="_blank">Problem Solving and Process Controls – IBM</a>
-        </li>
-    </ul>
-</section>
-
-<section id="contact" class="reveal">
-    <h2>Contact</h2>
-    <p>Feel free to reach out!</p>
-    <ul>
-        <li>
-            <strong>Email:</strong> <a href="mailto:yokesh19072005@gmail.com">yokesh19072005@gmail.com</a>
-        </li>
-        <li>
-            <strong>LinkedIn:</strong> <a href=" https://www.linkedin.com/in/yokeshbl">yokeshbl</a>
-        </li>
-        <li>
-            <strong> Mobile Number:</strong> +91-6383464027
-        </li>
-    </ul>
-</section>
 </body>
 </html>
