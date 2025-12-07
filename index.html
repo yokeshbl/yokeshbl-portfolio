@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
+
         :root {
             /* Palette: Deep Space + Neon Indigo + Bright Cyan */
             --bg-dark: #020617;
@@ -34,16 +35,22 @@
             color: var(--text-main);
             font-family: var(--font-head);
             overflow-x: hidden;
+            /* Animated Background Grid */
             background-image: 
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-size: 100% 100%, 50px 50px, 50px 50px;
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         .section-padding { padding: 80px 0; }
+        /* Tighter padding for bottom sections */
+        .section-tight { padding: 40px 0; } 
+        
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease; }
         .reveal.active { opacity: 1; transform: translateY(0); }
+        
         .gradient-text {
             background: linear-gradient(135deg, #fff, var(--primary));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -64,7 +71,6 @@
             text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; 
             transition: 0.3s; padding: 5px 10px; border-radius: 6px;
         }
-        /* Uniform Hover for ALL buttons */
         .nav-links a:hover { color: #fff; background: rgba(99, 102, 241, 0.1); color: var(--accent); }
 
         .menu-btn { display: none; font-size: 1.5rem; color: #fff; cursor: pointer; }
@@ -75,14 +81,39 @@
             padding-top: 60px; perspective: 1000px; 
         }
         
-        .hero-text h1 { font-size: clamp(3rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 20px; font-weight: 800; }
+        .hero-text h1 { 
+            font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1.1; margin-bottom: 20px; font-weight: 800; 
+            text-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+        }
+        
+        /* New Hello Badge Style */
+        .hello-badge {
+            display: inline-block;
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: var(--font-code);
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.2);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(34, 211, 238, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+        }
+
         .hero-text p { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 30px; line-height: 1.6; }
         
         .btn-main {
             padding: 12px 30px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s;
         }
         .btn-filled { background: var(--primary); color: #fff; box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3); }
-        .btn-filled:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5); }
+        .btn-filled:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6); }
         .btn-out { border: 1px solid var(--border); color: #fff; margin-left: 15px; }
         .btn-out:hover { background: rgba(255,255,255,0.05); border-color: #fff; }
 
@@ -99,15 +130,13 @@
         
         .face {
             position: absolute; width: 260px; height: 260px;
-            /* Glass Effect: Transparent with Blur */
-            background: rgba(99, 102, 241, 0.1); 
-            backdrop-filter: blur(4px);
-            border: none; /* No Border as requested */
+            background: rgba(99, 102, 241, 0.05); /* Very Transparent */
+            backdrop-filter: blur(2px);
+            border: none;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             font-size: 5rem; color: #fff;
-            /* Glowing Box Shadow */
-            box-shadow: 0 0 50px rgba(99, 102, 241, 0.4);
-            border-radius: 12px; /* Slight rounded corners for glass feel */
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.5); /* Strong Glow */
+            border-radius: 16px;
         }
         .face span { font-size: 1.2rem; margin-top: 15px; font-family: var(--font-code); color: var(--accent); }
 
@@ -124,31 +153,49 @@
         .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; }
         .about-card {
             background: var(--bg-card); border: 1px solid var(--border); padding: 40px; border-radius: 16px;
+            transition: 0.3s;
         }
+        .hover-glow:hover { border-color: var(--accent); box-shadow: 0 0 20px rgba(34, 211, 238, 0.1); }
+
         .stat-card {
             background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3);
             padding: 20px; border-radius: 12px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px;
+            transition: 0.3s;
         }
+        .stat-card:hover { transform: translateX(10px); background: rgba(99, 102, 241, 0.2); }
         .stat-num { font-size: 1.8rem; font-weight: 800; color: #fff; }
         
         /* --- Skills --- */
         .skills-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; margin-top: 30px; }
         .skill {
             background: var(--bg-card); border: 1px solid var(--border); padding: 25px 10px; border-radius: 12px;
-            text-align: center; transition: 0.3s;
+            text-align: center; transition: 0.3s; cursor: default;
         }
-        .skill:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .skill:hover { border-color: var(--primary); transform: translateY(-5px) scale(1.05); box-shadow: 0 0 15px rgba(99, 102, 241, 0.3); }
         .skill i { font-size: 2rem; color: var(--text-muted); margin-bottom: 10px; }
         .skill:hover i { color: var(--accent); }
 
-        /* --- Projects --- */
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        /* --- Projects (Expanded) --- */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
         .p-card {
-            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px;
-            display: flex; flex-direction: column; transition: 0.3s;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 35px;
+            display: flex; flex-direction: column; transition: 0.3s; position: relative; overflow: hidden;
         }
-        .p-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .p-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary);
+            opacity: 0; transition: 0.3s;
+        }
+        .p-card:hover { transform: translateY(-7px); border-color: rgba(99, 102, 241, 0.5); }
+        .p-card:hover::before { opacity: 1; }
         
+        .feature-list { list-style: none; margin-bottom: 25px; margin-top: 15px; }
+        .feature-list li { 
+            color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px; position: relative; padding-left: 20px; 
+        }
+        .feature-list li::before {
+            content: '▹'; color: var(--accent); position: absolute; left: 0;
+        }
+
         .btn-code {
             margin-top: auto;
             background: linear-gradient(90deg, var(--primary), #4338ca);
@@ -158,32 +205,97 @@
         }
         .btn-code:hover { box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6); transform: scale(1.02); }
 
-        /* --- Education --- */
-        .edu-feature-card {
-            background: linear-gradient(135deg, var(--bg-card), rgba(15, 23, 42, 0.9));
-            border: 1px solid var(--border); padding: 40px; border-radius: 20px;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3); transition: 0.3s;
-        }
-        .edu-feature-card:hover { border-color: var(--primary); }
-        .edu-info h3 { font-size: 2rem; color: #fff; margin-bottom: 10px; font-family: var(--font-head); }
-        .cgpa-badge {
-            background: rgba(34, 211, 238, 0.1); border: 1px solid var(--accent);
-            padding: 15px 30px; border-radius: 12px; text-align: center;
-        }
-        .cgpa-val { font-size: 2.5rem; font-weight: 800; color: #fff; line-height: 1; }
+       /* --- EDUCATION (Large Feature Card) --- */
+.edu-feature-card {
+    background: linear-gradient(135deg, var(--bg-card), rgba(15, 23, 42, 0.9));
+    border: 1px solid var(--border);
+    padding: 40px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
 
-        /* --- Certifications --- */
-        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 20px; }
-        .cert-card {
-            background: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 16px;
-            display: flex; gap: 20px; align-items: start; transition: 0.3s;
-        }
-        .cert-card:hover { border-color: var(--accent); background: rgba(15, 23, 42, 0.8); }
-        .cert-icon {
-            min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); color: var(--primary);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-        }
+.edu-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent);
+}
+
+.edu-feature-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+}
+
+.edu-info h3 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 10px;
+    font-family: var(--font-head);
+}
+
+.cgpa-badge {
+    background: rgba(34, 211, 238, 0.1);
+    border: 1px solid var(--accent);
+    padding: 15px 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(34, 211, 238, 0.1);
+}
+
+.cgpa-val {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+
+/* --- CERTIFICATIONS (Strict 2x2 Grid) --- */
+.cert-grid { 
+    display: grid; 
+    /* This creates exactly 2 equal columns */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 25px; 
+    margin-top: 20px; 
+}
+
+.cert-card {
+    background: var(--bg-card); 
+    border: 1px solid var(--border); 
+    padding: 30px; 
+    border-radius: 12px;
+    display: flex; 
+    gap: 20px; 
+    align-items: center; 
+    transition: 0.3s; 
+    height: 100%; /* Ensures all cards are the same height */
+}
+
+.cert-card:hover { 
+    border-color: var(--success); 
+    background: rgba(16, 185, 129, 0.05); 
+    transform: translateY(-5px);
+}
+
+.cert-icon { 
+    font-size: 1.8rem; 
+    color: var(--success); 
+    flex-shrink: 0; /* Prevents icon from shrinking */
+}
+
+/* Mobile: Stack them (1 column) for better readability on phones */
+@media (max-width: 900px) {
+    .cert-grid { grid-template-columns: 1fr; }
+    .edu-feature-card { flex-direction: column; text-align: center; gap: 20px; }
+}
 
         /* --- Contact --- */
         .contact-row { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
@@ -191,7 +303,7 @@
             background: var(--bg-card); border: 1px solid var(--border); padding: 30px; border-radius: 16px;
             text-align: center; min-width: 250px; text-decoration: none; color: inherit; transition: 0.3s;
         }
-        .c-box:hover { border-color: var(--primary); background: rgba(99, 102, 241, 0.05); }
+        .c-box:hover { border-color: var(--primary); background: rgba(99, 102, 241, 0.05); transform: translateY(-5px); }
 
         /* --- Mobile --- */
         @media (max-width: 900px) {
@@ -240,19 +352,24 @@
 
     <section class="hero container" id="home">
         <div class="hero-text reveal active">
-            <p style="color: var(--accent); font-weight: 700; letter-spacing: 2px;">HELLO WORLD</p>
+            <div class="hello-badge">
+                <i class="fas fa-code"></i> HELLO WORLD
+            </div>
             <h1>Yokesh BL</h1>
-            <p style="font-family: var(--font-code); color: var(--primary); margin-bottom: 20px; font-weight: 700;">
+            <p style="font-family: var(--font-code); color: var(--primary); margin-bottom: 20px; font-weight: 700; font-size: 1.2rem;">
                 <i class="fas fa-terminal"></i> Java Backend Developer
             </p>
             <p>
-                Specialized in Spring Boot, Microservices, and building scalable APIs. <br>
-                Passionate about clean architecture and high-performance code.
+                Specialized in building scalable microservices and robust APIs. <br>
+                Focused on clean architecture, efficiency, and problem-solving.
             </p>
             <div>
-                <a href="#projects" class="btn-main btn-filled">View My Work</a>
-                <a href="#contact" class="btn-main btn-out">Contact Me</a>
-            </div>
+    <a href="#projects" class="btn-main btn-filled">View My Work</a>
+    <a href="#contact" class="btn-main btn-out">Contact Me</a>
+    <a href="https://drive.google.com/file/d/1vWXtaD7GUhtYLc3m27e89JIvOnwsauQK/view?usp=sharing" target="_blank" class="btn-main btn-out">
+        <i class="fas fa-download"></i> Download Resume
+    </a>
+</div>
         </div>
 
         <div class="scene reveal active">
@@ -269,31 +386,43 @@
 
     <section id="about" class="section-padding container">
         <div class="about-grid reveal">
-            <div class="about-card">
+            <div class="about-card hover-glow">
                 <h2 style="font-size: 2.5rem; margin-bottom: 20px;">About Me</h2>
-                <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 20px;">
-                    I am a results-driven <strong>Software Developer</strong> with a strong foundation in Information Systems. 
-                    I focus on backend development using <strong>Java, Spring Boot, and MySQL</strong>.
+                <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem; text-align: justify;">
+    I’m a passionate software developer with a focus on Java and backend technologies. I enjoy solving problems and building applications that are both reliable and easy to use. With experience in Java, Spring Boot, Hibernate, REST APIs, and databases, I aim to bring value by writing clean code, improving performance, and contributing to projects that make a real impact.
+</p>
+                <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; font-size: 1.05rem;">
+                    My goal is simple: <strong>Write clean code that solves real problems.</strong>
                 </p>
                 <div style="background: rgba(34, 211, 238, 0.1); padding: 15px; border-left: 4px solid var(--accent); border-radius: 4px;">
-                    <strong style="color: #fff;">🏆 Academic Proficiency Award (2022-2024)</strong><br>
-                    <span style="font-size: 0.9rem; color: var(--text-muted);">For outstanding academic excellence.</span>
+                    <strong style="color: #fff;">🏆 Academic Proficiency Award (2022-2024)</strong>
                 </div>
             </div>
-            <div>
-                <div class="stat-card">
-                    <div class="stat-num">8.5</div>
-                    <div>CGPA<br><span style="font-size: 0.8rem; color: var(--text-muted);">B.Com ISM</span></div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-num">3+</div>
-                    <div>Projects<br><span style="font-size: 0.8rem; color: var(--text-muted);">Full Stack</span></div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-num">3 Mo</div>
-                    <div>Internship<br><span style="font-size: 0.8rem; color: var(--text-muted);">Backend Dev</span></div>
-                </div>
-            </div>
+            <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; gap: 20px;">
+    <div class="stat-card" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <div class="stat-num">8.5 / 10</div>
+        <div>
+            <span style="font-weight: 600; color: #fff;">Cumulative Grade Point Average</span><br>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Bachelor of Commerce (ISM) </span>
+        </div>
+    </div>
+    
+    <div class="stat-card" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <div class="stat-num">3+ Projects</div>
+        <div>
+            <span style="font-weight: 600; color: #fff;">End-to-End Application Development</span><br>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Built with Java, Spring Boot & Angular </span>
+        </div>
+    </div>
+    
+    <div class="stat-card" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <div class="stat-num">3 Months</div>
+        <div>
+            <span style="font-weight: 600; color: #fff;">Backend Development Internship</span><br>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Systemic Altruism (Dec 2024 - Mar 2025) </span>
+        </div>
+    </div>
+</div>
         </div>
     </section>
 
@@ -319,37 +448,54 @@
             <div class="p-card">
                 <i class="far fa-folder" style="font-size: 2rem; color: var(--accent); margin-bottom: 15px;"></i>
                 <h3 style="margin-bottom: 10px;">Hire Hub Portal</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1;">
-                    Recruitment platform with role-based access and AI resume analysis using OpenAI.
+                <p style="color: #fff; font-size: 0.95rem; margin-bottom: 10px;">
+                    Smart recruitment platform connecting employers and job seekers.
                 </p>
+                <ul class="feature-list">
+                    <li>AI Resume Analysis using <strong>OpenAI API</strong></li>
+                    <li>Text extraction via <strong>Apache Tika</strong></li>
+                    <li>Role-Based Access Control (RBAC)</li>
+                </ul>
                 <a href="https://github.com/yokeshbl/jobportal-final-year-project" target="_blank" class="btn-code">
-                    <i class="fab fa-github"></i> View Source Code
+                    <i class="fab fa-github"></i> View Code
                 </a>
             </div>
+
             <div class="p-card">
                 <i class="far fa-folder" style="font-size: 2rem; color: var(--accent); margin-bottom: 15px;"></i>
                 <h3 style="margin-bottom: 10px;">Luv2Shop E-Commerce</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1;">
-                    Full-stack shopping app with cart management, secure checkout, and admin dashboard.
+                <p style="color: #fff; font-size: 0.95rem; margin-bottom: 10px;">
+                    Full-stack shopping application with secure checkout.
                 </p>
+                <ul class="feature-list">
+                    <li>Secure Authentication & AuthZ</li>
+                    <li>Cart & Order Management Logic</li>
+                    <li><strong>Angular</strong> Frontend + <strong>Spring Boot</strong> Backend</li>
+                </ul>
                 <a href="https://github.com/yokeshbl/ecommerce-project" target="_blank" class="btn-code">
-                    <i class="fab fa-github"></i> View Source Code
+                    <i class="fab fa-github"></i> View Code
                 </a>
             </div>
+
             <div class="p-card">
                 <i class="far fa-folder" style="font-size: 2rem; color: var(--accent); margin-bottom: 15px;"></i>
                 <h3 style="margin-bottom: 10px;">Employee Directory</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1;">
-                    CRUD application for employee records with strict server-side validation.
+                <p style="color: #fff; font-size: 0.95rem; margin-bottom: 10px;">
+                    Corporate record management system.
                 </p>
+                <ul class="feature-list">
+                    <li>Strict Server-Side Validation</li>
+                    <li>MVC Architecture with <strong>Thymeleaf</strong></li>
+                    <li>Efficient CRUD Operations</li>
+                </ul>
                 <a href="https://github.com/yokeshbl/Employee_Management_directory_Project" target="_blank" class="btn-code">
-                    <i class="fab fa-github"></i> View Source Code
+                    <i class="fab fa-github"></i> View Code
                 </a>
             </div>
         </div>
     </section>
 
-    <section id="education" class="section-padding container">
+    <section id="education" class="section-padding container" style="padding-bottom: 40px;">
         <h2 class="reveal" style="font-size: 2.5rem; margin-bottom: 30px;">Education</h2>
         <div class="edu-feature-card reveal">
             <div class="edu-info">
@@ -362,43 +508,44 @@
                 <div class="cgpa-lbl">CGPA</div>
             </div>
         </div>
-    </section>
-
-    <section id="certifications" class="section-padding container">
-        <h2 class="reveal" style="font-size: 2.5rem; margin-bottom: 30px;">Certifications</h2>
-        <div class="cert-grid reveal">
-            <div class="cert-card">
-                <div class="cert-icon"><i class="fas fa-network-wired"></i></div>
-                <div>
-                    <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px;">Master Microservices with Spring Boot & Cloud</h3>
-                    <div style="color: var(--text-muted); font-size: 0.9rem;">Udemy • <span style="color: var(--accent);">Pursuing</span></div>
-                </div>
-            </div>
-            <div class="cert-card">
-                <div class="cert-icon"><i class="fas fa-leaf"></i></div>
-                <div>
-                    <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px;">Spring Boot 3, Spring 6 & Hibernate</h3>
-                    <div style="color: var(--text-muted); font-size: 0.9rem;">Udemy • 2024</div>
-                </div>
-            </div>
-            <div class="cert-card">
-                <div class="cert-icon"><i class="fas fa-brain"></i></div>
-                <div>
-                    <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px;">Artificial Intelligence Fundamentals</h3>
-                    <div style="color: var(--text-muted); font-size: 0.9rem;">IBM • 2025</div>
-                </div>
-            </div>
-            <div class="cert-card">
-                <div class="cert-icon"><i class="fas fa-layer-group"></i></div>
-                <div>
-                    <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px;">Full Stack: Angular and Java Spring Boot</h3>
-                    <div style="color: var(--text-muted); font-size: 0.9rem;">Udemy • 2024</div>
-                </div>
+    </section><section id="certifications" class="section-tight container">
+    <h2 class="reveal" style="font-size: 2.5rem; margin-bottom: 30px;">Certifications</h2>
+    <div class="cert-grid reveal">
+        <div class="cert-card">
+            <div class="cert-icon"><i class="fas fa-network-wired"></i></div>
+            <div>
+                <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px;">Master Microservices with Spring Boot & Cloud</h3>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">Udemy • <span style="color: var(--accent);">Pursuing</span></div>
             </div>
         </div>
-    </section>
 
-    <section id="contact" class="section-padding container">
+        <div class="cert-card">
+            <div class="cert-icon"><i class="fas fa-leaf"></i></div>
+            <div>
+                <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px;">Spring Boot 3, Spring 6 & Hibernate</h3>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">Udemy • 2024</div>
+            </div>
+        </div>
+
+        <div class="cert-card">
+            <div class="cert-icon"><i class="fas fa-brain"></i></div>
+            <div>
+                <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px;">Artificial Intelligence Fundamentals</h3>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">IBM • 2025</div>
+            </div>
+        </div>
+
+        <div class="cert-card">
+            <div class="cert-icon"><i class="fas fa-layer-group"></i></div>
+            <div>
+                <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px;">Full Stack: Angular and Java Spring Boot</h3>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">Udemy • 2024</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="contact" class="section-padding container" style="padding-top: 40px;">
         <h2 class="reveal" style="font-size: 2.5rem; text-align: center; margin-bottom: 40px;">Get In Touch</h2>
         <div class="contact-row reveal">
             <a href="mailto:yokesh19072005@gmail.com" class="c-box">
