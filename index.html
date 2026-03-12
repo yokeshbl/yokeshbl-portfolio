@@ -26,13 +26,14 @@
             --font-code: 'Fira Code', monospace;
         }
 
+        html, body { overflow-x: hidden; } /* Prevents side-scrolling on mobile */
+        
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; cursor: none; }
         
         body {
             background-color: var(--bg-deep);
             color: var(--text-main);
             font-family: var(--font-head);
-            overflow-x: hidden;
             background-image: 
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
@@ -81,7 +82,7 @@
         h1, h2, h3 { text-transform: uppercase; letter-spacing: 1px; }
 
         .cyber-heading {
-            font-size: 2.5rem; margin-bottom: 40px; display: inline-block;
+            font-size: clamp(2rem, 5vw, 2.5rem); margin-bottom: 40px; display: inline-block;
             position: relative; color: #fff; text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
         }
         .cyber-heading::before { content: '[ '; color: var(--neon-purple); }
@@ -112,12 +113,12 @@
             box-shadow: 0 0 10px var(--neon-cyan);
         }
         .nav-links a:hover::after { width: 100%; }
-        .menu-btn { display: none; font-size: 1.5rem; color: var(--neon-cyan); cursor: none; }
+        .menu-btn { display: none; font-size: 1.5rem; color: var(--neon-cyan); cursor: none; background: transparent; border: none; }
 
         .hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding-top: 60px; }
-        .hero-text h1 { font-size: clamp(3rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 10px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.1); }
+        .hero-text h1 { font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1.1; margin-bottom: 10px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.1); }
         .hero-subtitle {
-            font-family: var(--font-code); color: var(--neon-cyan); font-size: 1.2rem;
+            font-family: var(--font-code); color: var(--neon-cyan); font-size: clamp(1rem, 3vw, 1.2rem);
             margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;
             display: flex; align-items: center; gap: 10px;
         }
@@ -125,7 +126,7 @@
         .hero-text p { color: var(--text-dim); font-size: 1.1rem; max-width: 500px; margin-bottom: 40px; line-height: 1.6; }
         
         .btn-cyber {
-            display: inline-flex; align-items: center; gap: 10px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             padding: 12px 24px; font-family: var(--font-code); font-size: 0.9rem;
             text-transform: uppercase; text-decoration: none; font-weight: 600;
             border: 1px solid var(--neon-cyan); color: var(--neon-cyan);
@@ -266,23 +267,48 @@
         .contact-link:hover { border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.05); transform: translateY(-5px); }
         .contact-link:hover i { text-shadow: 0 0 15px rgba(0, 243, 255, 0.5); transform: scale(1.1); }
 
+        /* ========================================= */
+        /* MOBILE RESPONSIVE STYLES         */
+        /* ========================================= */
         @media (max-width: 900px) {
-            .hero { flex-direction: column; text-align: center; gap: 50px; padding-top: 120px; }
+            /* Disable custom cursor for touch screens */
+            .cursor-glow { display: none !important; }
+            * { cursor: auto !important; }
+            
+            .section-padding { padding: 60px 0; }
+            
+            /* Hero Section Mobile */
+            .hero { flex-direction: column; text-align: center; gap: 40px; padding-top: 100px; min-height: auto; }
             .hero-subtitle { justify-content: center; }
-            .hero-btns { justify-content: center; }
-            .hud-container { width: 250px; height: 250px; }
-            .c1 { width: 220px; height: 220px; } .c2 { width: 180px; height: 180px; } .c3 { width: 140px; height: 140px; }
-            .about-grid { grid-template-columns: 1fr; }
-            .cursor-glow { display: none; }
-            * { cursor: auto; }
-            .menu-btn { display: block; }
+            .hero-btns { flex-direction: column; width: 100%; align-items: stretch; }
+            .btn-cyber { width: 100%; justify-content: center; padding: 15px; }
+
+            /* HUD Shrink for Mobile */
+            .hud-container { width: 220px; height: 220px; margin: 0 auto; }
+            .c1 { width: 200px; height: 200px; } 
+            .c2 { width: 160px; height: 160px; } 
+            .c3 { width: 120px; height: 120px; }
+            .hud-core { font-size: 3rem; }
+
+            /* Grids to Single Column */
+            .about-grid, .project-grid, .cert-grid, .contact-grid { grid-template-columns: 1fr; gap: 25px; }
+            .glass-panel { padding: 25px 20px; }
+            
+            /* Timeline Adjustment */
+            .timeline { padding-left: 20px; }
+            .timeline-item::before { left: -27px; width: 12px; height: 12px; }
+
+            /* Mobile Navigation Menu */
+            .menu-btn { display: block; z-index: 1001; }
             .nav-links {
-                position: absolute; top: 70px; left: 0; width: 100%; background: rgba(3, 3, 5, 0.95);
-                backdrop-filter: blur(10px); flex-direction: column; gap: 0; display: none;
-                border-bottom: 1px solid var(--neon-cyan);
+                position: absolute; top: 70px; left: 0; width: 100%; 
+                background: rgba(3, 3, 5, 0.98); backdrop-filter: blur(15px);
+                flex-direction: column; gap: 0; display: none;
+                border-bottom: 2px solid var(--neon-cyan);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             }
             .nav-links.active { display: flex; }
-            .nav-links a { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .nav-links a { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 1rem; }
             .nav-links a::after { display: none; }
         }
     </style>
@@ -294,7 +320,7 @@
     <nav>
         <div class="container nav-inner">
             <div class="logo">YOKESH<span style="color: #fff;">_BL</span></div>
-            <div class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <button class="menu-btn" onclick="toggleMenu()" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
             <div class="nav-links" id="navLinks">
                 <a href="#about" onclick="toggleMenu()">01. About</a>
                 <a href="#experience" onclick="toggleMenu()">02. Experience</a>
@@ -512,23 +538,25 @@
     </section>
 
     <script>
-        // Custom Glowing Cursor Tracker
-        const cursor = document.getElementById('cursorGlow');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+        // Custom Glowing Cursor Tracker (Desktop Only)
+        if (window.innerWidth > 900) {
+            const cursor = document.getElementById('cursorGlow');
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
 
-        document.addEventListener('mousedown', () => {
-            cursor.style.width = '60px'; cursor.style.height = '60px';
-            cursor.style.background = 'radial-gradient(circle, rgba(188, 19, 254, 0.4) 0%, transparent 70%)';
-        });
+            document.addEventListener('mousedown', () => {
+                cursor.style.width = '60px'; cursor.style.height = '60px';
+                cursor.style.background = 'radial-gradient(circle, rgba(188, 19, 254, 0.4) 0%, transparent 70%)';
+            });
 
-        document.addEventListener('mouseup', () => {
-            cursor.style.width = '40px'; cursor.style.height = '40px';
-            cursor.style.background = 'radial-gradient(circle, rgba(0, 243, 255, 0.3) 0%, transparent 70%)';
-        });
+            document.addEventListener('mouseup', () => {
+                cursor.style.width = '40px'; cursor.style.height = '40px';
+                cursor.style.background = 'radial-gradient(circle, rgba(0, 243, 255, 0.3) 0%, transparent 70%)';
+            });
+        }
 
         // Dynamic MERN Tech Icon Cycler
         const icons = [
@@ -563,7 +591,10 @@
         }, 3000); // Cycles every 3 seconds
 
         // Mobile Menu Toggle
-        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+        function toggleMenu() { 
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active'); 
+        }
         
         // Smooth Scroll Reveal
         const observer = new IntersectionObserver((entries) => {
