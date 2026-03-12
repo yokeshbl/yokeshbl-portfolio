@@ -27,23 +27,14 @@
         }
 
         /* Prevent Horizontal Scroll Issues */
-        html, body { 
-            overflow-x: hidden; 
-            width: 100%; 
-            max-width: 100vw;
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            scroll-behavior: smooth; 
-            cursor: none; 
-        }
-        
-        * { box-sizing: inherit; cursor: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
         body {
             background-color: var(--bg-deep);
             color: var(--text-main);
             font-family: var(--font-head);
+            width: 100%;
+            overflow-x: hidden; /* Only on body to prevent scroll lock */
             background-image: 
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
@@ -52,7 +43,11 @@
             position: relative;
         }
 
-        /* Custom Glowing Cursor */
+        /* Custom Glowing Cursor - Desktop Only */
+        @media (min-width: 901px) {
+            * { cursor: none !important; }
+        }
+        
         .cursor-glow {
             width: 40px; height: 40px;
             background: radial-gradient(circle, rgba(0, 243, 255, 0.4) 0%, transparent 70%);
@@ -62,16 +57,15 @@
             transition: width 0.2s, height 0.2s;
         }
 
+        /* Atmospheric glowing orbs */
         body::before {
-            content: ''; position: fixed; top: -20%; left: -10%;
-            width: 50vw; height: 50vw;
-            background: radial-gradient(circle, rgba(188, 19, 254, 0.1) 0%, transparent 60%);
+            content: ''; position: fixed; top: -20%; left: -10%; width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(188, 19, 254, 0.08) 0%, transparent 60%);
             z-index: -1; pointer-events: none;
         }
         body::after {
-            content: ''; position: fixed; bottom: -20%; right: -10%;
-            width: 50vw; height: 50vw;
-            background: radial-gradient(circle, rgba(0, 243, 255, 0.08) 0%, transparent 60%);
+            content: ''; position: fixed; bottom: -20%; right: -10%; width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(0, 243, 255, 0.06) 0%, transparent 60%);
             z-index: -1; pointer-events: none;
         }
 
@@ -100,7 +94,7 @@
 
         nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(3, 3, 5, 0.8); backdrop-filter: blur(10px);
+            background: rgba(3, 3, 5, 0.85); backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0, 243, 255, 0.1);
             height: 70px; display: flex; align-items: center;
         }
@@ -114,7 +108,7 @@
         .nav-links a { 
             text-decoration: none; color: var(--text-dim); font-size: 0.85rem; 
             font-family: var(--font-code); text-transform: uppercase; transition: 0.3s;
-            position: relative; cursor: none;
+            position: relative;
         }
         .nav-links a:hover { color: var(--neon-cyan); transform: translateY(-2px); }
         .nav-links a::after {
@@ -123,9 +117,9 @@
             box-shadow: 0 0 10px var(--neon-cyan);
         }
         .nav-links a:hover::after { width: 100%; }
-        .menu-btn { display: none; font-size: 1.5rem; color: var(--neon-cyan); cursor: none; background: transparent; border: none; outline: none; }
+        .menu-btn { display: none; font-size: 1.5rem; color: var(--neon-cyan); background: transparent; border: none; outline: none; cursor: pointer; }
 
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding-top: 60px; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding-top: 70px; }
         .hero-text h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 10px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.1); }
         .hero-subtitle {
             font-family: var(--font-code); color: var(--neon-cyan); font-size: 1.2rem;
@@ -141,7 +135,7 @@
             text-transform: uppercase; text-decoration: none; font-weight: 600;
             border: 1px solid var(--neon-cyan); color: var(--neon-cyan);
             background: rgba(0, 243, 255, 0.05); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            position: relative; overflow: hidden; cursor: none;
+            position: relative; overflow: hidden;
         }
         .btn-cyber:hover {
             background: var(--neon-cyan); color: #000;
@@ -240,7 +234,7 @@
         .cyber-tag {
             background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 10px 20px; border-radius: 4px; font-family: var(--font-code); font-size: 0.9rem;
-            color: var(--text-main); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); cursor: none;
+            color: var(--text-main); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .cyber-tag:hover {
             border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.05);
@@ -257,7 +251,7 @@
         .p-tech { font-family: var(--font-code); font-size: 0.75rem; color: var(--neon-purple); margin-bottom: 20px; }
         .p-link {
             font-family: var(--font-code); color: var(--neon-cyan); text-decoration: none;
-            font-size: 0.9rem; display: flex; align-items: center; gap: 8px; margin-top: auto; cursor: none;
+            font-size: 0.9rem; display: flex; align-items: center; gap: 8px; margin-top: auto;
             transition: transform 0.3s ease;
         }
         .p-link:hover { text-shadow: 0 0 8px var(--neon-cyan); transform: translateX(5px); }
@@ -271,7 +265,7 @@
         .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center; }
         .contact-link {
             display: block; padding: 30px; text-decoration: none; color: var(--text-main);
-            border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); background: rgba(255,255,255,0.02); cursor: none;
+            border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); background: rgba(255,255,255,0.02);
         }
         .contact-link i { font-size: 2rem; color: var(--neon-cyan); margin-bottom: 15px; transition: 0.3s; }
         .contact-link:hover { border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.05); transform: translateY(-5px); }
@@ -281,17 +275,18 @@
         /* BULLETPROOF MOBILE RESPONSIVE FIXES       */
         /* ========================================= */
         @media (max-width: 900px) {
-            /* Disable custom cursor to fix touch issues */
-            .cursor-glow { display: none !important; }
-            * { cursor: auto !important; }
             
-            .section-padding { padding: 80px 0; }
+            .section-padding { padding: 60px 0; }
             
-            /* Enforce safe container padding */
-            .container { padding: 0 20px !important; overflow-x: hidden; }
-            
-            /* Center and Fix Hero Alignments */
-            .hero { flex-direction: column; text-align: center; gap: 40px; padding-top: 100px; min-height: auto; }
+            /* Center and Fix Hero Alignments - Prevent Name Hiding */
+            .hero { 
+                flex-direction: column; 
+                text-align: center; 
+                gap: 30px; 
+                padding-top: 140px; /* Increased to push below the navbar */
+                min-height: auto; 
+                justify-content: flex-start; /* Stops vertical centering bug */
+            }
             .hero-subtitle { justify-content: center; font-size: 1rem; }
             .hero-text h1 { font-size: clamp(2.5rem, 10vw, 3.5rem); }
             .hero-btns { flex-direction: column; width: 100%; align-items: stretch; gap: 15px; }
@@ -304,12 +299,32 @@
             .c3 { width: 120px; height: 120px; }
             .hud-core { font-size: 3rem; }
 
+            /* Fix Left Alignment / Cutoff in sections */
+            .container { padding: 0 15px !important; }
+            
+            /* Center Headers and Tags completely */
+            .cyber-heading { 
+                font-size: clamp(1.8rem, 6vw, 2.2rem); 
+                display: block; 
+                text-align: center; 
+                width: 100%; 
+            }
+            section h2 { text-align: center; }
+            .skill-category h3 { text-align: center; }
+            .skill-tags { justify-content: center; } /* Brings tech stack tags to center */
+
             /* Stack Grids cleanly into single columns */
             .about-grid, .project-grid, .cert-grid, .contact-grid { 
-                grid-template-columns: 1fr !important; 
+                grid-template-columns: 1fr; 
                 gap: 25px; 
             }
-            .glass-panel { padding: 25px 20px; }
+            
+            /* Remove backdrop filter on mobile for smooth scrolling performance */
+            .glass-panel { 
+                padding: 25px 20px; 
+                background: var(--bg-panel); /* solid color instead of blur */
+                backdrop-filter: none; 
+            }
             
             /* Fix Stats Box Left-Hugging */
             .stats-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
@@ -321,16 +336,16 @@
                 border-radius: 8px; 
                 border: 1px solid rgba(0, 243, 255, 0.1); 
             }
-            .stat-box:hover { transform: translateY(-3px); }
 
             /* FIX: Timeline Overflowing Left Edge */
             .timeline { 
                 padding-left: 20px; 
-                margin-left: 15px; /* Pushes the entire line inwards safely */
+                margin-left: 10px; 
                 border-left: 2px solid rgba(0, 243, 255, 0.3);
             }
+            .timeline-item { text-align: left; }
             .timeline-item::before { 
-                left: -27px; /* Mathematically aligned with padding + border */
+                left: -27px; 
                 width: 12px; height: 12px; 
             }
             .time-role { font-size: 1.2rem; }
@@ -339,7 +354,8 @@
             .menu-btn { display: block; z-index: 1001; }
             .nav-links {
                 position: absolute; top: 70px; left: 0; width: 100%; 
-                background: rgba(3, 3, 5, 0.98); backdrop-filter: blur(15px);
+                background: var(--bg-deep); /* solid color for performance */
+                backdrop-filter: none;
                 flex-direction: column; gap: 0; display: none;
                 border-bottom: 2px solid var(--neon-cyan);
                 box-shadow: 0 10px 30px rgba(0,0,0,0.8);
@@ -347,8 +363,6 @@
             .nav-links.active { display: flex; }
             .nav-links a { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 1rem; }
             .nav-links a::after { display: none; }
-            
-            .cyber-heading { font-size: clamp(1.8rem, 6vw, 2.2rem); }
         }
     </style>
 </head>
@@ -635,14 +649,14 @@
             navLinks.classList.toggle('active'); 
         }
         
-        // Smooth Scroll Reveal
+        // Smooth Scroll Reveal - optimized for mobile & desktop
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { 
                 if(entry.isIntersecting) {
                     entry.target.classList.add('active'); 
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 }); // Lowered threshold so it triggers earlier on scroll
         
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
