@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="Portfolio of Yokesh BL - Full Stack Web Developer">
     <title>Yokesh BL | Full Stack Web Developer</title>
     
@@ -26,9 +26,19 @@
             --font-code: 'Fira Code', monospace;
         }
 
-        html, body { overflow-x: hidden; } /* Prevents side-scrolling on mobile */
+        /* Prevent Horizontal Scroll Issues */
+        html, body { 
+            overflow-x: hidden; 
+            width: 100%; 
+            max-width: 100vw;
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            scroll-behavior: smooth; 
+            cursor: none; 
+        }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; cursor: none; }
+        * { box-sizing: inherit; cursor: none; }
         
         body {
             background-color: var(--bg-deep);
@@ -65,7 +75,7 @@
             z-index: -1; pointer-events: none;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
         .section-padding { padding: 100px 0; }
         
         /* Smooth Scale Reveal Animation */
@@ -82,7 +92,7 @@
         h1, h2, h3 { text-transform: uppercase; letter-spacing: 1px; }
 
         .cyber-heading {
-            font-size: clamp(2rem, 5vw, 2.5rem); margin-bottom: 40px; display: inline-block;
+            font-size: 2.5rem; margin-bottom: 40px; display: inline-block;
             position: relative; color: #fff; text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
         }
         .cyber-heading::before { content: '[ '; color: var(--neon-purple); }
@@ -113,12 +123,12 @@
             box-shadow: 0 0 10px var(--neon-cyan);
         }
         .nav-links a:hover::after { width: 100%; }
-        .menu-btn { display: none; font-size: 1.5rem; color: var(--neon-cyan); cursor: none; background: transparent; border: none; }
+        .menu-btn { display: none; font-size: 1.5rem; color: var(--neon-cyan); cursor: none; background: transparent; border: none; outline: none; }
 
         .hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding-top: 60px; }
-        .hero-text h1 { font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1.1; margin-bottom: 10px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.1); }
+        .hero-text h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 10px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.1); }
         .hero-subtitle {
-            font-family: var(--font-code); color: var(--neon-cyan); font-size: clamp(1rem, 3vw, 1.2rem);
+            font-family: var(--font-code); color: var(--neon-cyan); font-size: 1.2rem;
             margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;
             display: flex; align-items: center; gap: 10px;
         }
@@ -200,7 +210,7 @@
         .stat-box:last-child { border: none; }
         .stat-val { font-size: 2rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(188, 19, 254, 0.5); }
 
-        /* Timeline with Pulsing Dots */
+        /* Timeline */
         .timeline { position: relative; max-width: 800px; margin: 0 auto; padding-left: 30px; border-left: 2px solid rgba(0, 243, 255, 0.2); }
         .timeline-item { position: relative; margin-bottom: 50px; transition: transform 0.3s ease; }
         .timeline-item:hover { transform: translateX(5px); }
@@ -268,37 +278,64 @@
         .contact-link:hover i { text-shadow: 0 0 15px rgba(0, 243, 255, 0.5); transform: scale(1.1); }
 
         /* ========================================= */
-        /* MOBILE RESPONSIVE STYLES         */
+        /* BULLETPROOF MOBILE RESPONSIVE FIXES       */
         /* ========================================= */
         @media (max-width: 900px) {
-            /* Disable custom cursor for touch screens */
+            /* Disable custom cursor to fix touch issues */
             .cursor-glow { display: none !important; }
             * { cursor: auto !important; }
             
-            .section-padding { padding: 60px 0; }
+            .section-padding { padding: 80px 0; }
             
-            /* Hero Section Mobile */
+            /* Enforce safe container padding */
+            .container { padding: 0 20px !important; overflow-x: hidden; }
+            
+            /* Center and Fix Hero Alignments */
             .hero { flex-direction: column; text-align: center; gap: 40px; padding-top: 100px; min-height: auto; }
-            .hero-subtitle { justify-content: center; }
-            .hero-btns { flex-direction: column; width: 100%; align-items: stretch; }
+            .hero-subtitle { justify-content: center; font-size: 1rem; }
+            .hero-text h1 { font-size: clamp(2.5rem, 10vw, 3.5rem); }
+            .hero-btns { flex-direction: column; width: 100%; align-items: stretch; gap: 15px; }
             .btn-cyber { width: 100%; justify-content: center; padding: 15px; }
 
-            /* HUD Shrink for Mobile */
+            /* Shrink HUD safely */
             .hud-container { width: 220px; height: 220px; margin: 0 auto; }
             .c1 { width: 200px; height: 200px; } 
             .c2 { width: 160px; height: 160px; } 
             .c3 { width: 120px; height: 120px; }
             .hud-core { font-size: 3rem; }
 
-            /* Grids to Single Column */
-            .about-grid, .project-grid, .cert-grid, .contact-grid { grid-template-columns: 1fr; gap: 25px; }
+            /* Stack Grids cleanly into single columns */
+            .about-grid, .project-grid, .cert-grid, .contact-grid { 
+                grid-template-columns: 1fr !important; 
+                gap: 25px; 
+            }
             .glass-panel { padding: 25px 20px; }
             
-            /* Timeline Adjustment */
-            .timeline { padding-left: 20px; }
-            .timeline-item::before { left: -27px; width: 12px; height: 12px; }
+            /* Fix Stats Box Left-Hugging */
+            .stats-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+            .stat-box { 
+                flex-direction: column; 
+                text-align: center; 
+                background: rgba(255,255,255,0.02); 
+                padding: 20px; 
+                border-radius: 8px; 
+                border: 1px solid rgba(0, 243, 255, 0.1); 
+            }
+            .stat-box:hover { transform: translateY(-3px); }
 
-            /* Mobile Navigation Menu */
+            /* FIX: Timeline Overflowing Left Edge */
+            .timeline { 
+                padding-left: 20px; 
+                margin-left: 15px; /* Pushes the entire line inwards safely */
+                border-left: 2px solid rgba(0, 243, 255, 0.3);
+            }
+            .timeline-item::before { 
+                left: -27px; /* Mathematically aligned with padding + border */
+                width: 12px; height: 12px; 
+            }
+            .time-role { font-size: 1.2rem; }
+
+            /* Mobile Nav Dropdown Fixes */
             .menu-btn { display: block; z-index: 1001; }
             .nav-links {
                 position: absolute; top: 70px; left: 0; width: 100%; 
@@ -310,6 +347,8 @@
             .nav-links.active { display: flex; }
             .nav-links a { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 1rem; }
             .nav-links a::after { display: none; }
+            
+            .cyber-heading { font-size: clamp(1.8rem, 6vw, 2.2rem); }
         }
     </style>
 </head>
