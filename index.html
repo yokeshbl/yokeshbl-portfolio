@@ -34,7 +34,7 @@
             color: var(--text-main);
             font-family: var(--font-head);
             width: 100%;
-            overflow-x: hidden; /* Only on body to prevent scroll lock */
+            overflow-x: hidden; 
             background-image: 
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
@@ -278,15 +278,21 @@
             
             .section-padding { padding: 60px 0; }
             
-            /* Center and Fix Hero Alignments - Prevent Name Hiding */
+            /* FORCE HERO TEXT BELOW NAVBAR */
             .hero { 
                 flex-direction: column; 
                 text-align: center; 
-                gap: 30px; 
-                padding-top: 140px; /* Increased to push below the navbar */
-                min-height: auto; 
-                justify-content: flex-start; /* Stops vertical centering bug */
+                gap: 40px; 
+                padding-top: 100px !important; /* Forces top padding */
+                justify-content: flex-start !important; /* Stops flexbox from pushing text up */
+                height: auto;
+                min-height: 100vh;
             }
+            
+            .hero-text {
+                margin-top: 50px; /* Extra solid margin to guarantee clearance */
+            }
+
             .hero-subtitle { justify-content: center; font-size: 1rem; }
             .hero-text h1 { font-size: clamp(2.5rem, 10vw, 3.5rem); }
             .hero-btns { flex-direction: column; width: 100%; align-items: stretch; gap: 15px; }
@@ -300,7 +306,7 @@
             .hud-core { font-size: 3rem; }
 
             /* Fix Left Alignment / Cutoff in sections */
-            .container { padding: 0 15px !important; }
+            .container { padding: 0 20px !important; }
             
             /* Center Headers and Tags completely */
             .cyber-heading { 
@@ -311,7 +317,7 @@
             }
             section h2 { text-align: center; }
             .skill-category h3 { text-align: center; }
-            .skill-tags { justify-content: center; } /* Brings tech stack tags to center */
+            .skill-tags { justify-content: center; }
 
             /* Stack Grids cleanly into single columns */
             .about-grid, .project-grid, .cert-grid, .contact-grid { 
@@ -322,7 +328,7 @@
             /* Remove backdrop filter on mobile for smooth scrolling performance */
             .glass-panel { 
                 padding: 25px 20px; 
-                background: var(--bg-panel); /* solid color instead of blur */
+                background: var(--bg-panel); 
                 backdrop-filter: none; 
             }
             
@@ -354,7 +360,7 @@
             .menu-btn { display: block; z-index: 1001; }
             .nav-links {
                 position: absolute; top: 70px; left: 0; width: 100%; 
-                background: var(--bg-deep); /* solid color for performance */
+                background: var(--bg-deep); 
                 backdrop-filter: none;
                 flex-direction: column; gap: 0; display: none;
                 border-bottom: 2px solid var(--neon-cyan);
@@ -656,7 +662,7 @@
                     entry.target.classList.add('active'); 
                 }
             });
-        }, { threshold: 0.1 }); // Lowered threshold so it triggers earlier on scroll
+        }, { threshold: 0.1 }); 
         
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
