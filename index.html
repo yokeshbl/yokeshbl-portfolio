@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="description" content="Portfolio of Yokesh BL - Full Stack Web Developer">
+    <meta name="description" content="Portfolio of Yokesh BL">
     <title>Yokesh BL | Full Stack Web Developer</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,15 +18,15 @@
             --neon-cyan: #00f3ff;
             --neon-purple: #bc13fe;
             --neon-react: #61dafb;
+            --neon-mongo: #4db33d;
+            --neon-node: #68a063;
             --text-main: #e0e0ff;
             --text-dim: #8b8b9f;
-            --grid-color: rgba(0, 243, 255, 0.05);
-            
+            --grid-color: rgba(0, 243, 255, 0.03);
             --font-head: 'Space Grotesk', sans-serif;
             --font-code: 'Fira Code', monospace;
         }
 
-        /* Prevent Horizontal Scroll Issues */
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
         body {
@@ -43,7 +43,74 @@
             position: relative;
         }
 
-        /* Custom Glowing Cursor - Desktop Only */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-deep);
+            z-index: 999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease-out;
+        }
+
+        .loader-content {
+            font-family: var(--font-code);
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .loader-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: var(--neon-cyan);
+            animation: blink 0.8s infinite;
+        }
+
+        .ambient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
+            animation: driftOrb 20s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 50vw;
+            height: 50vw;
+            background: rgba(188, 19, 254, 0.15);
+            top: -10%;
+            left: -10%;
+        }
+
+        .orb-2 {
+            width: 40vw;
+            height: 40vw;
+            background: rgba(0, 243, 255, 0.1);
+            bottom: -10%;
+            right: -10%;
+            animation-delay: -5s;
+        }
+
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            z-index: 10000;
+            width: 0%;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
         @media (min-width: 901px) {
             * { cursor: none !important; }
         }
@@ -57,22 +124,9 @@
             transition: width 0.2s, height 0.2s;
         }
 
-        /* Atmospheric glowing orbs */
-        body::before {
-            content: ''; position: fixed; top: -20%; left: -10%; width: 50vw; height: 50vw;
-            background: radial-gradient(circle, rgba(188, 19, 254, 0.08) 0%, transparent 60%);
-            z-index: -1; pointer-events: none;
-        }
-        body::after {
-            content: ''; position: fixed; bottom: -20%; right: -10%; width: 50vw; height: 50vw;
-            background: radial-gradient(circle, rgba(0, 243, 255, 0.06) 0%, transparent 60%);
-            z-index: -1; pointer-events: none;
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; position: relative; z-index: 2; }
         .section-padding { padding: 100px 0; }
         
-        /* Smooth Scale Reveal Animation */
         .reveal { 
             opacity: 0; 
             transform: translateY(40px) scale(0.97); 
@@ -94,7 +148,7 @@
 
         nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(3, 3, 5, 0.85); backdrop-filter: blur(10px);
+            background: rgba(3, 3, 5, 0.7); backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(0, 243, 255, 0.1);
             height: 70px; display: flex; align-items: center;
         }
@@ -110,25 +164,29 @@
             font-family: var(--font-code); text-transform: uppercase; transition: 0.3s;
             position: relative;
         }
-        .nav-links a:hover { color: var(--neon-cyan); transform: translateY(-2px); }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; 
-            height: 2px; background: var(--neon-cyan); transition: 0.3s ease-out;
-            box-shadow: 0 0 10px var(--neon-cyan);
-        }
-        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--neon-cyan); transform: translateY(-2px); text-shadow: 0 0 8px var(--neon-cyan); }
         .menu-btn { display: none; font-size: 1.5rem; color: var(--neon-cyan); background: transparent; border: none; outline: none; cursor: pointer; }
 
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding-top: 70px; }
-        .hero-text h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 10px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.1); }
+        .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 70px; }
+        .hero-text { max-width: 600px; }
+        .hero-text h1 { 
+            font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 10px; color: #fff; 
+            text-shadow: 0 0 15px rgba(255,255,255,0.2);
+            animation: glitch 3s infinite alternate;
+        }
         .hero-subtitle {
             font-family: var(--font-code); color: var(--neon-cyan); font-size: 1.2rem;
             margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;
             display: flex; align-items: center; gap: 10px;
         }
-        .hero-subtitle i { text-shadow: 0 0 10px var(--neon-cyan); }
+        .hero-subtitle i { text-shadow: 0 0 10px var(--neon-cyan); animation: pulse 2s infinite; }
         .hero-text p { color: var(--text-dim); font-size: 1.1rem; max-width: 500px; margin-bottom: 40px; line-height: 1.6; }
         
+        #typewriter {
+            font-size: 1.3rem; margin-bottom: 15px; color: var(--neon-purple); font-family: var(--font-code);
+            text-shadow: 0 0 8px var(--neon-purple);
+        }
+
         .btn-cyber {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             padding: 12px 24px; font-family: var(--font-code); font-size: 0.9rem;
@@ -137,50 +195,58 @@
             background: rgba(0, 243, 255, 0.05); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
             position: relative; overflow: hidden;
         }
+        .btn-cyber::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,243,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .btn-cyber:hover::before { left: 100%; }
         .btn-cyber:hover {
             background: var(--neon-cyan); color: #000;
-            box-shadow: 0 5px 20px rgba(0, 243, 255, 0.3); transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.6); transform: translateY(-3px);
         }
         .btn-purple { border-color: var(--neon-purple); color: var(--neon-purple); background: rgba(188, 19, 254, 0.05); }
-        .btn-purple:hover { background: var(--neon-purple); color: #fff; box-shadow: 0 5px 20px rgba(188, 19, 254, 0.3); }
+        .btn-purple:hover { background: var(--neon-purple); color: #fff; box-shadow: 0 0 20px rgba(188, 19, 254, 0.6); }
+        .btn-purple::before { background: linear-gradient(90deg, transparent, rgba(188,19,254,0.2), transparent); }
         .hero-btns { display: flex; gap: 20px; flex-wrap: wrap; }
 
-        /* Dynamic HUD Elements */
-        .hud-container { position: relative; width: 350px; height: 350px; display: flex; justify-content: center; align-items: center;}
-        .hud-circle {
-            position: absolute; border-radius: 50%; border: 1px solid rgba(97, 218, 251, 0.1);
-            border-top: 2px solid var(--neon-react); border-bottom: 2px solid var(--neon-purple);
-            animation: rotate 10s linear infinite;
-        }
-        .c1 { width: 300px; height: 300px; animation-duration: 15s; }
-        .c2 { width: 240px; height: 240px; border-left: 2px solid var(--neon-cyan); border-right: 2px solid transparent; animation-duration: 10s; animation-direction: reverse; }
-        .c3 { width: 180px; height: 180px; border: 1px dashed var(--neon-purple); animation-duration: 20s; }
-        
-        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes floatCore { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
-
-        .hud-core-wrapper {
-            animation: floatCore 4s ease-in-out infinite;
+        .dynamic-sphere-container {
+            position: fixed; 
+            width: 400px; height: 400px; 
             display: flex; justify-content: center; align-items: center;
+            perspective: 1000px; transform-style: preserve-3d;
+            z-index: 0; 
+            pointer-events: none;
+            opacity: 0.5;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+        .orbit-ring {
+            position: absolute; border-radius: 50%; border: 1px solid rgba(0, 243, 255, 0.15);
+            transform-style: preserve-3d;
+        }
+        .ring-1 { width: 350px; height: 350px; animation: orbitX 12s linear infinite; border-top: 2px solid var(--neon-cyan); }
+        .ring-2 { width: 280px; height: 280px; animation: orbitY 15s linear infinite; border-bottom: 2px solid var(--neon-purple); }
+        .ring-3 { width: 200px; height: 200px; animation: orbitZ 8s linear infinite; border-left: 2px solid var(--neon-react); }
+        .core-element {
+            font-size: 4.5rem; position: absolute;
+            text-shadow: 0 0 30px rgba(0, 243, 255, 0.8);
+            animation: floatCore 4s ease-in-out infinite, pulseGlow 2s infinite alternate;
+            transition: all 0.5s ease;
         }
 
-        .hud-core { 
-            font-size: 4.5rem; 
-            color: var(--neon-react); 
-            text-shadow: 0 0 20px rgba(97, 218, 251, 0.6); 
-            transition: opacity 0.4s ease, transform 0.4s ease, color 0.4s ease, text-shadow 0.4s ease;
-        }
-
-        /* Smooth Interactive Glass Panels */
         .glass-panel {
-            background: rgba(10, 10, 18, 0.6); backdrop-filter: blur(12px);
+            background: rgba(10, 10, 18, 0.6); backdrop-filter: blur(8px);
             border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; padding: 30px;
             position: relative; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: hidden;
         }
         .glass-panel:hover {
             transform: translateY(-6px);
-            border-color: rgba(0, 243, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            border-color: rgba(0, 243, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(0,243,255,0.1);
         }
         .glass-panel::before {
             content: ''; position: absolute; top: 0; left: 0; width: 20px; height: 20px;
@@ -192,8 +258,7 @@
             border-bottom: 2px solid var(--neon-purple); border-right: 2px solid var(--neon-purple);
             transition: all 0.4s ease;
         }
-        .glass-panel:hover::before { width: 30px; height: 30px; }
-        .glass-panel:hover::after { width: 30px; height: 30px; }
+        .glass-panel:hover::before, .glass-panel:hover::after { width: 40px; height: 40px; box-shadow: inset 0 0 10px rgba(0,243,255,0.2); }
 
         .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; }
         .about-text { color: var(--text-dim); line-height: 1.7; font-size: 1.05rem; margin-bottom: 20px;}
@@ -201,51 +266,44 @@
         .stats-grid { display: flex; flex-direction: column; gap: 20px; justify-content: center; }
         .stat-box { display: flex; align-items: center; gap: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; transition: transform 0.3s ease;}
         .stat-box:hover { transform: translateX(10px); }
-        .stat-box:last-child { border: none; }
         .stat-val { font-size: 2rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(188, 19, 254, 0.5); }
 
-        /* Timeline */
         .timeline { position: relative; max-width: 800px; margin: 0 auto; padding-left: 30px; border-left: 2px solid rgba(0, 243, 255, 0.2); }
         .timeline-item { position: relative; margin-bottom: 50px; transition: transform 0.3s ease; }
         .timeline-item:hover { transform: translateX(5px); }
-        
-        @keyframes pulse-dot {
-            0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(0, 243, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
-        }
         .timeline-item::before {
             content: ''; position: absolute; left: -37px; top: 0; width: 12px; height: 12px;
             background: var(--bg-deep); border: 2px solid var(--neon-cyan); border-radius: 50%; 
             animation: pulse-dot 2s infinite;
         }
-        
         .time-date { font-family: var(--font-code); color: var(--neon-purple); font-size: 0.9rem; margin-bottom: 10px; display: block; }
         .time-role { font-size: 1.4rem; color: #fff; margin-bottom: 5px; }
         .time-company { color: var(--text-dim); margin-bottom: 15px; font-weight: 600; }
         .time-desc { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
         .time-desc ul { list-style: none; padding-left: 10px; margin-top: 10px; }
         .time-desc li { position: relative; padding-left: 20px; margin-bottom: 8px; }
-        .time-desc li::before { content: '>'; position: absolute; left: 0; color: var(--neon-cyan); font-family: var(--font-code); }
+        .time-desc li::before { content: '>'; position: absolute; left: 0; color: var(--neon-cyan); font-family: var(--font-code); animation: blink 1.5s infinite; }
 
         .skills-container { display: flex; flex-direction: column; gap: 40px; }
         .skill-category h3 { font-size: 1.2rem; margin-bottom: 20px; color: var(--text-dim); font-family: var(--font-code); }
         .skill-tags { display: flex; flex-wrap: wrap; gap: 15px; }
         .cyber-tag {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 10px 20px; border-radius: 4px; font-family: var(--font-code); font-size: 0.9rem;
             color: var(--text-main); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
         }
         .cyber-tag:hover {
-            border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.05);
-            color: var(--neon-cyan); transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 5px 15px rgba(0, 243, 255, 0.1);
+            border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.1);
+            color: var(--neon-cyan); transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
         }
 
         .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .p-card { display: flex; flex-direction: column; height: 100%; }
-        .p-icon { font-size: 2rem; color: var(--neon-cyan); margin-bottom: 20px; transition: transform 0.3s ease; }
-        .p-card:hover .p-icon { transform: scale(1.1); }
+        .p-card { display: flex; flex-direction: column; height: 100%; cursor: pointer;}
+        .p-card:hover { transform: scale(1.02) translateY(-10px); z-index: 10;}
+        .p-icon { font-size: 2.5rem; color: var(--neon-cyan); margin-bottom: 20px; transition: transform 0.3s ease; text-shadow: 0 0 10px var(--neon-cyan);}
+        .p-card:hover .p-icon { transform: scale(1.2) rotate(5deg); }
         .p-title { font-size: 1.3rem; margin-bottom: 10px; color: #fff; }
         .p-desc { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1; }
         .p-tech { font-family: var(--font-code); font-size: 0.75rem; color: var(--neon-purple); margin-bottom: 20px; }
@@ -257,8 +315,10 @@
         .p-link:hover { text-shadow: 0 0 8px var(--neon-cyan); transform: translateX(5px); }
 
         .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .cert-box { padding: 20px; border-left: 2px solid var(--neon-purple); background: rgba(188, 19, 254, 0.05); transition: all 0.3s ease; }
-        .cert-box:hover { transform: translateY(-5px); background: rgba(188, 19, 254, 0.08); }
+        .cert-box { padding: 20px; border-left: 2px solid var(--neon-purple); background: rgba(188, 19, 254, 0.05); transition: all 0.3s ease; position: relative; overflow: hidden;}
+        .cert-box::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(188,19,254,0.1), transparent); transform: skewX(-20deg); transition: 0.5s; }
+        .cert-box:hover::before { left: 150%; }
+        .cert-box:hover { transform: translateY(-5px); background: rgba(188, 19, 254, 0.1); box-shadow: 0 0 15px rgba(188,19,254,0.2); }
         .cert-box h4 { color: #fff; margin-bottom: 5px; font-size: 1rem; }
         .cert-box p { color: var(--text-dim); font-size: 0.85rem; font-family: var(--font-code); }
 
@@ -266,107 +326,76 @@
         .contact-link {
             display: block; padding: 30px; text-decoration: none; color: var(--text-main);
             border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); background: rgba(255,255,255,0.02);
+            position: relative; overflow: hidden;
         }
-        .contact-link i { font-size: 2rem; color: var(--neon-cyan); margin-bottom: 15px; transition: 0.3s; }
+        .contact-link i { font-size: 2.5rem; color: var(--neon-cyan); margin-bottom: 15px; transition: 0.3s; }
         .contact-link:hover { border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.05); transform: translateY(-5px); }
-        .contact-link:hover i { text-shadow: 0 0 15px rgba(0, 243, 255, 0.5); transform: scale(1.1); }
+        .contact-link:hover i { text-shadow: 0 0 20px rgba(0, 243, 255, 0.8); transform: scale(1.2); }
 
-        /* ========================================= */
-        /* BULLETPROOF MOBILE RESPONSIVE FIXES       */
-        /* ========================================= */
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        @keyframes pulse-dot { 0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(0, 243, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); } }
+        @keyframes floatCore { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(10deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+        @keyframes pulseGlow { from { filter: drop-shadow(0 0 10px var(--neon-cyan)); } to { filter: drop-shadow(0 0 30px var(--neon-cyan)); } }
+        @keyframes orbitX { 0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); } 100% { transform: rotateX(360deg) rotateY(180deg) rotateZ(360deg); } }
+        @keyframes orbitY { 0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); } 100% { transform: rotateX(180deg) rotateY(360deg) rotateZ(180deg); } }
+        @keyframes orbitZ { 0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); } 100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(180deg); } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 var(--neon-cyan), -2px 0 var(--neon-purple); }
+            5% { text-shadow: -2px 0 var(--neon-cyan), 2px 0 var(--neon-purple); }
+            10% { text-shadow: 2px 0 var(--neon-cyan), -2px 0 var(--neon-purple); }
+            15% { text-shadow: -2px 0 var(--neon-cyan), 2px 0 var(--neon-purple); }
+            20% { text-shadow: 0 0 15px rgba(255,255,255,0.2); }
+            100% { text-shadow: 0 0 15px rgba(255,255,255,0.2); }
+        }
+        @keyframes driftOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(10vw, 5vh) scale(1.1); }
+            100% { transform: translate(-5vw, 10vh) scale(0.9); }
+        }
+
         @media (max-width: 900px) {
-            
             .section-padding { padding: 60px 0; }
-            
-            /* FORCE HERO TEXT BELOW NAVBAR */
-            .hero { 
-                flex-direction: column; 
-                text-align: center; 
-                gap: 40px; 
-                padding-top: 100px !important; /* Forces top padding */
-                justify-content: flex-start !important; /* Stops flexbox from pushing text up */
-                height: auto;
-                min-height: 100vh;
-            }
-            
-            .hero-text {
-                margin-top: 50px; /* Extra solid margin to guarantee clearance */
-            }
-
+            .nav-inner .logo { display: none; }
+            .menu-btn { display: block; z-index: 1001; margin-left: auto; }
+            .hero { text-align: center; justify-content: center; height: auto; min-height: 100vh; padding-top: 100px; }
+            .hero-text { margin-top: 20px; }
             .hero-subtitle { justify-content: center; font-size: 1rem; }
             .hero-text h1 { font-size: clamp(2.5rem, 10vw, 3.5rem); }
             .hero-btns { flex-direction: column; width: 100%; align-items: stretch; gap: 15px; }
             .btn-cyber { width: 100%; justify-content: center; padding: 15px; }
+            
+            .dynamic-sphere-container { 
+                width: 250px; height: 250px; 
+                opacity: 0.15;
+            }
+            .ring-1 { width: 220px; height: 220px; } 
+            .ring-2 { width: 180px; height: 180px; } 
+            .ring-3 { width: 140px; height: 140px; }
+            .core-element { font-size: 3rem; }
 
-            /* Shrink HUD safely */
-            .hud-container { width: 220px; height: 220px; margin: 0 auto; }
-            .c1 { width: 200px; height: 200px; } 
-            .c2 { width: 160px; height: 160px; } 
-            .c3 { width: 120px; height: 120px; }
-            .hud-core { font-size: 3rem; }
-
-            /* Fix Left Alignment / Cutoff in sections */
             .container { padding: 0 20px !important; }
-            
-            /* Center Headers and Tags completely */
-            .cyber-heading { 
-                font-size: clamp(1.8rem, 6vw, 2.2rem); 
-                display: block; 
-                text-align: center; 
-                width: 100%; 
-            }
-            section h2 { text-align: center; }
-            .skill-category h3 { text-align: center; }
+            .cyber-heading { font-size: clamp(1.8rem, 6vw, 2.2rem); display: block; text-align: center; width: 100%; }
+            section h2, .skill-category h3 { text-align: center; }
             .skill-tags { justify-content: center; }
-
-            /* Stack Grids cleanly into single columns */
-            .about-grid, .project-grid, .cert-grid, .contact-grid { 
-                grid-template-columns: 1fr; 
-                gap: 25px; 
-            }
-            
-            /* Remove backdrop filter on mobile for smooth scrolling performance */
-            .glass-panel { 
-                padding: 25px 20px; 
-                background: var(--bg-panel); 
-                backdrop-filter: none; 
-            }
-            
-            /* Fix Stats Box Left-Hugging */
+            .about-grid, .project-grid, .cert-grid, .contact-grid { grid-template-columns: 1fr; gap: 25px; }
+            .glass-panel { padding: 25px 20px; background: rgba(10, 10, 18, 0.85); backdrop-filter: none; }
             .stats-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-            .stat-box { 
-                flex-direction: column; 
-                text-align: center; 
-                background: rgba(255,255,255,0.02); 
-                padding: 20px; 
-                border-radius: 8px; 
-                border: 1px solid rgba(0, 243, 255, 0.1); 
-            }
-
-            /* FIX: Timeline Overflowing Left Edge */
-            .timeline { 
-                padding-left: 20px; 
-                margin-left: 10px; 
-                border-left: 2px solid rgba(0, 243, 255, 0.3);
-            }
+            .stat-box { flex-direction: column; text-align: center; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 8px; border: 1px solid rgba(0, 243, 255, 0.1); }
+            .timeline { padding-left: 20px; margin-left: 10px; border-left: 2px solid rgba(0, 243, 255, 0.3); }
             .timeline-item { text-align: left; }
-            .timeline-item::before { 
-                left: -27px; 
-                width: 12px; height: 12px; 
-            }
+            .timeline-item::before { left: -27px; width: 12px; height: 12px; }
             .time-role { font-size: 1.2rem; }
-
-            /* Mobile Nav Dropdown Fixes */
-            .menu-btn { display: block; z-index: 1001; }
+            
             .nav-links {
                 position: absolute; top: 70px; left: 0; width: 100%; 
-                background: var(--bg-deep); 
-                backdrop-filter: none;
+                background: rgba(3, 3, 5, 0.95); backdrop-filter: blur(10px);
                 flex-direction: column; gap: 0; display: none;
                 border-bottom: 2px solid var(--neon-cyan);
                 box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             }
-            .nav-links.active { display: flex; }
+            .nav-links.active { display: flex; animation: slideDown 0.3s ease; }
+            @keyframes slideDown { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
             .nav-links a { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 1rem; }
             .nav-links a::after { display: none; }
         }
@@ -374,11 +403,28 @@
 </head>
 <body>
 
+    <div id="loader">
+        <div class="loader-content" id="loaderContent">
+            <div><span id="loadText1"></span><span class="loader-cursor"></span></div>
+        </div>
+    </div>
+
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+
+    <div id="scroll-progress"></div>
     <div class="cursor-glow" id="cursorGlow"></div>
+
+    <div class="dynamic-sphere-container" id="dynamicSphere">
+        <div class="orbit-ring ring-1"></div>
+        <div class="orbit-ring ring-2"></div>
+        <div class="orbit-ring ring-3"></div>
+        <i id="core-icon" class="fab fa-react core-element" style="color: var(--neon-react);"></i>
+    </div>
 
     <nav>
         <div class="container nav-inner">
-            <div class="logo">YOKESH<span style="color: #fff;">_BL</span></div>
+            <div class="logo">YOKESH<span style="color: #fff;"> BL</span></div>
             <button class="menu-btn" onclick="toggleMenu()" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
             <div class="nav-links" id="navLinks">
                 <a href="#about" onclick="toggleMenu()">01. About</a>
@@ -396,27 +442,17 @@
                 <i class="fas fa-terminal"></i> System Initialized
             </div>
             <h1>Yokesh BL</h1>
-            <p class="highlight" style="font-size: 1.3rem; margin-bottom: 15px;">Full Stack Web Developer</p>
+            <div id="typewriter"></div>
             <p>
-                Specialized in building dynamic, high-performance web applications. 
-                Focused on scalable architectures, modern frameworks, and solving complex problems.
+                I am a fresher looking for entry-level roles. Specialized in building dynamic, high-performance web applications. Focused on scalable architectures, modern frameworks, and solving complex problems efficiently.
             </p>
             <div class="hero-btns">
                 <a href="#projects" class="btn-cyber">
                     <i class="fas fa-code-branch"></i> View Projects
                 </a>
-                <a href="https://drive.google.com/file/d/1vWXtaD7GUhtYLc3m27e89JIvOnwsauQK/view?usp=sharing" target="_blank" class="btn-cyber btn-purple">
+                <a href="#" target="_blank" class="btn-cyber btn-purple">
                     <i class="fas fa-download"></i> Extract Resume
                 </a>
-            </div>
-        </div>
-
-        <div class="hud-container reveal active">
-            <div class="hud-circle c1"></div>
-            <div class="hud-circle c2"></div>
-            <div class="hud-circle c3"></div>
-            <div class="hud-core-wrapper">
-                <i id="dynamic-icon" class="fab fa-react hud-core"></i>
             </div>
         </div>
     </section>
@@ -426,7 +462,7 @@
         <div class="about-grid reveal">
             <div class="glass-panel">
                 <p class="about-text">
-                    I am a web developer focused on creating fast, resilient, and interactive full-stack solutions. With a broadened skill set encompassing <span class="highlight">modern JavaScript frameworks (React, Node.js)</span>, I build applications from the ground up that are robust and user-centric.
+                    I am a web developer focused on creating fast, resilient, and interactive full-stack solutions. With a broadened skill set encompassing <span class="highlight">modern JavaScript frameworks</span>, I build applications from the ground up that are robust and user-centric.
                 </p>
                 <p class="about-text" style="margin-bottom: 0;">
                     My objective: <strong>Write clean, modular code that scales seamlessly.</strong>
@@ -485,11 +521,12 @@
             <div class="skill-category">
                 <h3>// Frontend Technologies</h3>
                 <div class="skill-tags">
-                    <span class="cyber-tag" style="border-color: var(--neon-react); color: var(--neon-react);">React.js</span>
+                    <span class="cyber-tag" style="border-color: var(--neon-react); color: var(--neon-react); text-shadow: 0 0 10px rgba(97,218,251,0.5);">React.js</span>
                     <span class="cyber-tag">JavaScript (ES6+)</span>
                     <span class="cyber-tag">HTML5</span>
                     <span class="cyber-tag">CSS3</span>
                     <span class="cyber-tag">Bootstrap 5</span>
+                    <span class="cyber-tag">AJAX</span>
                 </div>
             </div>
 
@@ -498,8 +535,6 @@
                 <div class="skill-tags">
                     <span class="cyber-tag">Node.js</span>
                     <span class="cyber-tag">Express.js</span>
-                    <span class="cyber-tag">PHP</span>
-                    <span class="cyber-tag">Laravel (Basics)</span>
                     <span class="cyber-tag">RESTful APIs</span>
                 </div>
             </div>
@@ -532,7 +567,7 @@
             </div>
             
             <div class="glass-panel p-card">
-                <i class="fas fa-shopping-cart p-icon" style="color: var(--neon-purple);"></i>
+                <i class="fas fa-shopping-cart p-icon" style="color: var(--neon-purple); text-shadow: 0 0 10px var(--neon-purple);"></i>
                 <h3 class="p-title">Luv2Shop E-Commerce</h3>
                 <p class="p-desc">Full-stack shopping application featuring secure checkout, cart logic, and robust authentication.</p>
                 <div class="p-tech">ANGULAR | SPRING BOOT | MYSQL</div>
@@ -557,19 +592,19 @@
         <h2 class="cyber-heading reveal">Certifications</h2>
         <div class="cert-grid reveal">
             <div class="cert-box">
-                <h4>The Web Developer Bootcamp (React, Node, Mongo)</h4>
+                <h4>The Web Developer Bootcamp</h4>
                 <p>Udemy • 2026</p>
             </div>
             <div class="cert-box">
-                <h4>Full Stack: Angular and Java Spring Boot</h4>
+                <h4>Full Stack: Angular and Java</h4>
                 <p>Udemy • 2024</p>
             </div>
             <div class="cert-box">
-                <h4>Spring Boot 3, Spring 6 & Hibernate</h4>
+                <h4>Spring Boot 3 & Hibernate</h4>
                 <p>Udemy • 2024</p>
             </div>
             <div class="cert-box">
-                <h4>Artificial Intelligence Fundamentals</h4>
+                <h4>AI Fundamentals</h4>
                 <p>IBM • 2025</p>
             </div>
         </div>
@@ -597,65 +632,153 @@
     </section>
 
     <script>
-        // Custom Glowing Cursor Tracker (Desktop Only)
+        const loader = document.getElementById('loader');
+        const loadText1 = document.getElementById('loadText1');
+        const loadingMessages = [
+            "> INITIALIZING SYSTEM...",
+            "> COMPILING ASSETS...",
+            "> LOADING MERN STACK...",
+            "> ACCESS GRANTED."
+        ];
+        
+        let msgIndex = 0;
+        let loadCharIndex = 0;
+
+        function typeLoader() {
+            if (msgIndex < loadingMessages.length) {
+                if (loadCharIndex < loadingMessages[msgIndex].length) {
+                    loadText1.innerHTML += loadingMessages[msgIndex].charAt(loadCharIndex);
+                    loadCharIndex++;
+                    setTimeout(typeLoader, 30);
+                } else {
+                    loadText1.innerHTML += "<br>";
+                    msgIndex++;
+                    loadCharIndex = 0;
+                    setTimeout(typeLoader, 200);
+                }
+            } else {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        startMainAnimations();
+                    }, 800);
+                }, 400);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(typeLoader, 200);
+        });
+
         if (window.innerWidth > 900) {
             const cursor = document.getElementById('cursorGlow');
-            
             document.addEventListener('mousemove', (e) => {
                 cursor.style.left = e.clientX + 'px';
                 cursor.style.top = e.clientY + 'px';
             });
-
             document.addEventListener('mousedown', () => {
                 cursor.style.width = '60px'; cursor.style.height = '60px';
                 cursor.style.background = 'radial-gradient(circle, rgba(188, 19, 254, 0.4) 0%, transparent 70%)';
             });
-
             document.addEventListener('mouseup', () => {
                 cursor.style.width = '40px'; cursor.style.height = '40px';
                 cursor.style.background = 'radial-gradient(circle, rgba(0, 243, 255, 0.3) 0%, transparent 70%)';
             });
         }
 
-        // Dynamic MERN Tech Icon Cycler
+        const dynamicSphere = document.getElementById('dynamicSphere');
+        let sphereX = window.innerWidth / 2;
+        let sphereY = window.innerHeight / 2;
+        let vX = window.innerWidth > 900 ? 1 : 0.5;
+        let vY = window.innerWidth > 900 ? 0.7 : 0.4;
+
+        function animateSphere() {
+            sphereX += vX;
+            sphereY += vY;
+
+            if (sphereX <= 150 || sphereX >= window.innerWidth - 150) vX *= -1;
+            if (sphereY <= 150 || sphereY >= window.innerHeight - 150) vY *= -1;
+
+            dynamicSphere.style.left = sphereX + 'px';
+            dynamicSphere.style.top = sphereY + 'px';
+            
+            requestAnimationFrame(animateSphere);
+        }
+        
+        window.addEventListener('resize', () => {
+            if (sphereX > window.innerWidth) sphereX = window.innerWidth - 150;
+            if (sphereY > window.innerHeight) sphereY = window.innerHeight - 150;
+        });
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+        });
+
         const icons = [
-            { class: 'fab fa-react', color: '#61dafb' },      // React Blue
-            { class: 'fab fa-node-js', color: '#68a063' },    // Node Green
-            { class: 'fas fa-database', color: '#4db33d' },   // MongoDB Green
-            { class: 'fas fa-server', color: '#ffffff' },     // Express / Server White
-            { class: 'fab fa-js', color: '#f7df1e' }          // JavaScript Yellow
+            { class: 'fas fa-leaf', color: '#4db33d' },
+            { class: 'fas fa-server', color: '#ffffff' },
+            { class: 'fab fa-react', color: '#61dafb' },
+            { class: 'fab fa-node-js', color: '#68a063' },
+            { class: 'fas fa-exchange-alt', color: '#f7df1e' }
         ];
         
         let currentIconIndex = 0;
-        const dynamicIcon = document.getElementById('dynamic-icon');
+        const coreIcon = document.getElementById('core-icon');
 
         setInterval(() => {
-            // Fade out and shrink
-            dynamicIcon.style.opacity = 0;
-            dynamicIcon.style.transform = "scale(0.8)";
-
+            coreIcon.style.opacity = 0;
+            coreIcon.style.transform = "scale(0.5) rotate(-180deg)";
             setTimeout(() => {
-                // Change icon class and color
                 currentIconIndex = (currentIconIndex + 1) % icons.length;
                 const nextIcon = icons[currentIconIndex];
-                
-                dynamicIcon.className = nextIcon.class + ' hud-core';
-                dynamicIcon.style.color = nextIcon.color;
-                dynamicIcon.style.textShadow = `0 0 20px ${nextIcon.color}`;
+                coreIcon.className = nextIcon.class + ' core-element';
+                coreIcon.style.color = nextIcon.color;
+                coreIcon.style.textShadow = `0 0 30px ${nextIcon.color}`;
+                coreIcon.style.opacity = 1;
+                coreIcon.style.transform = "scale(1) rotate(0deg)";
+            }, 500);
+        }, 3500);
 
-                // Fade back in
-                dynamicIcon.style.opacity = 1;
-                dynamicIcon.style.transform = "scale(1)";
-            }, 400); // Wait for fade out to complete
-        }, 3000); // Cycles every 3 seconds
+        const textArray = ["Full Stack Web Developer", "Problem Solver", "Tech Enthusiast"];
+        let textIndex = 0;
+        let charIndex = 0;
+        const typeTarget = document.getElementById('typewriter');
 
-        // Mobile Menu Toggle
+        function type() {
+            if (charIndex < textArray[textIndex].length) {
+                typeTarget.innerHTML = textArray[textIndex].substring(0, charIndex + 1) + '<span class="type-cursor">_</span>';
+                charIndex++;
+                setTimeout(type, 100);
+            } else {
+                setTimeout(erase, 2000);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                typeTarget.innerHTML = textArray[textIndex].substring(0, charIndex - 1) + '<span class="type-cursor">_</span>';
+                charIndex--;
+                setTimeout(erase, 50);
+            } else {
+                textIndex = (textIndex + 1) % textArray.length;
+                setTimeout(type, 500);
+            }
+        }
+
+        function startMainAnimations() {
+            setTimeout(type, 500);
+            animateSphere();
+        }
+
         function toggleMenu() { 
             const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('active'); 
         }
         
-        // Smooth Scroll Reveal - optimized for mobile & desktop
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { 
                 if(entry.isIntersecting) {
