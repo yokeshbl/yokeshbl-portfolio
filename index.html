@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="Portfolio of Yokesh BL">
     <title>Yokesh BL | Full Stack Web Developer</title>
-    
+   <link rel="icon" type="image/png" href="https://img.icons8.com/neon/96/code-fork.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
@@ -66,9 +66,28 @@
             transition: width 0.1s;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; position: relative; z-index: 2; }
-        .section-padding { padding: 120px 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding-left: 24px; padding-right: 24px; width: 100%; position: relative; z-index: 2; }
         
+        .section-padding { 
+            padding-top: 120px; 
+            padding-bottom: 120px; 
+            position: relative; /* Needed for the animated divider */
+        }
+        
+        /* Animated Flowing Divider */
+        .section-padding:not(:last-of-type)::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-purple), transparent);
+            background-size: 200% 100%;
+            animation: flowingEnergy 3s linear infinite;
+            opacity: 0.4;
+        }
+
         .reveal { 
             opacity: 0; 
             transform: translateY(40px) scale(0.97); 
@@ -195,7 +214,6 @@
 
         .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; }
         
-        /* Justified text for uniform line endings */
         .about-text { color: var(--text-dim); line-height: 1.7; font-size: 1.05rem; margin-bottom: 20px; text-align: justify;}
         
         .highlight { color: var(--neon-cyan); font-family: var(--font-code); }
@@ -285,6 +303,10 @@
         @keyframes orbitY { 0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); } 100% { transform: rotateX(180deg) rotateY(360deg) rotateZ(180deg); } }
         @keyframes orbitZ { 0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); } 100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(180deg); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes flowingEnergy {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
         @keyframes glitch {
             0% { text-shadow: 2px 0 var(--neon-cyan), -2px 0 var(--neon-purple); }
             5% { text-shadow: -2px 0 var(--neon-cyan), 2px 0 var(--neon-purple); }
@@ -302,11 +324,11 @@
         /* --- MOBILE SPECIFIC FIXES --- */
         @media (max-width: 900px) {
             .section-padding { 
-                padding: 100px 0; 
-                margin-bottom: 60px; 
-                border-bottom: 1px solid rgba(0, 243, 255, 0.05);
+                padding-top: 60px; 
+                padding-bottom: 60px; 
             }
-            section:last-of-type { border-bottom: none; margin-bottom: 0; }
+
+            .container { padding-left: 20px !important; padding-right: 20px !important; }
 
             .nav-inner .logo { display: none; }
             .menu-btn { display: block; z-index: 1001; margin-left: auto; }
@@ -314,12 +336,12 @@
             .hero { 
                 display: flex; flex-direction: column; justify-content: flex-start;
                 text-align: center; height: auto; min-height: 100vh; 
-                padding-top: 120px; padding-bottom: 60px;
+                padding-top: 100px; 
+                padding-bottom: 60px; 
             }
             .hero-text { margin: 0 auto; }
             .hero-subtitle { justify-content: center; font-size: 1rem; margin-bottom: 20px; }
             
-            /* Margin top added here specifically for mobile */
             .hero-text h1 { margin-top: 58px; font-size: clamp(2.5rem, 10vw, 3.5rem); }
             
             .hero-btns { flex-direction: column; width: 100%; align-items: stretch; gap: 15px; margin-top: 30px; }
@@ -331,7 +353,6 @@
             .ring-3 { width: 140px; height: 140px; }
             .core-element { font-size: 3rem; }
 
-            .container { padding: 0 20px !important; }
             .cyber-heading { font-size: clamp(1.8rem, 6vw, 2.2rem); display: block; text-align: center; width: 100%; margin-bottom: 50px; }
             section h2, .skill-category h3 { text-align: center; }
             .skill-tags { justify-content: center; }
