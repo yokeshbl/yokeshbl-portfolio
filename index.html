@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="Portfolio of Yokesh BL">
-    <title>Yokesh BL | Full Stack Web Developer</title>
+    <title>Yokesh BL | Junior Web Developer</title>
+    
+    <link rel="preload" as="image" href="yokesh.png" fetchpriority="high">
+    
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23030305' stroke='%23bc13fe' stroke-width='8'/%3E%3Cpath d='M 30 30 L 50 55 L 70 30 M 50 55 L 50 75' stroke='%2300f3ff' stroke-width='12' stroke-linecap='round' stroke-linejoin='round' fill='none' /%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -144,6 +147,7 @@
         }
         .hero-image img {
             width: 100%;
+            height: auto;
             border-radius: 20px; 
             border: none;
             background: transparent;
@@ -535,9 +539,8 @@
                 <i class="fas fa-terminal"></i> System Initialized
             </div>
             
-            <!-- MOBILE SPECIFIC IMAGE (Now sits above Name, as subtitle is hidden) -->
             <div class="hero-image mobile-image">
-                <img src="yokesh.png" alt="Yokesh BL Profile">
+                <img src="yokesh.png" alt="Yokesh BL Profile" width="250" height="250" fetchpriority="high" decoding="async">
             </div>
 
             <h1>Yokesh BL</h1>
@@ -555,9 +558,8 @@
             </div>
         </div>
         
-        <!-- DESKTOP SPECIFIC IMAGE (Sits on the right) -->
         <div class="hero-image desktop-image reveal active">
-            <img src="yokesh.png" alt="Yokesh BL Profile">
+            <img src="yokesh.png" alt="Yokesh BL Profile" width="450" height="450" fetchpriority="high" decoding="async">
         </div>
     </section>
 
@@ -566,7 +568,7 @@
         <div class="about-grid reveal">
             <div class="glass-panel 3d-hover">
                 <p class="about-text">
-                    I am a web developer focused on creating fast, resilient, and interactive full-stack solutions. With a broadened skill set encompassing <span class="highlight">modern JavaScript frameworks</span>, I build applications from the ground up that are robust and user-centric.
+                    I am a web developer focused on creating fast, resilient, and interactive web solutions. With a broadened skill set encompassing <span class="highlight">modern JavaScript frameworks</span>, I build applications from the ground up that are robust and user-centric.
                 </p>
                 <p class="about-text" style="margin-bottom: 0;">
                     My objective: <strong>Write clean, modular code that scales seamlessly.</strong>
@@ -596,9 +598,16 @@
         <div class="timeline reveal">
             
             <div class="timeline-item">
-                <span class="time-date">Nov 2025 - Present</span>
+                <span class="time-date">May 2026 - Present</span>
+                <h3 class="time-role">Junior Web Developer</h3>
+                <div class="time-company">Sri Hema Infotech</div>
+            </div>
+
+            <div class="timeline-item">
+                <span class="time-date">Nov 2025 - Apr 2026</span>
                 <h3 class="time-role">Trainee</h3>
                 <div class="time-company">Sri Hema Infotech</div>
+                
             </div>
 
             <div class="timeline-item">
@@ -825,7 +834,7 @@
         }, 3500);
 
         // Typewriter Effect
-        const textArray = ["Full Stack Web Developer", "Problem Solver", "Tech Enthusiast"];
+        const textArray = ["Junior Web Developer", "Problem Solver", "Tech Enthusiast"];
         let textIndex = 0;
         let charIndex = 0;
         const typeTarget = document.getElementById('typewriter');
